@@ -1,0 +1,16 @@
+term_cs: Inventura
+term_en: Cycle count / Inventory
+term_ro: Inventar
+term_it: Inventario
+term_ua: Інвентаризація
+term_pl: Inwentaryzacja
+
+definitions:
+  - context: logistics
+    meaning: Fyzická kontrola skutečného stavu zásob a porovnání se záznamy v systému (cycle count).
+    en_gui: Cycle count
+    en_code: CycleCount
+  - context: finance
+    meaning: Inventarizace — účetní proces ověření že stav majetku a závazků v účetnictví odpovídá skutečnosti.
+    en_gui: Inventory / Stocktaking
+    en_code: Inventory

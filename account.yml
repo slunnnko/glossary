@@ -1,0 +1,13 @@
+term_cs: Konto
+term_en: Account
+term_ro: Cont
+term_it: Conto
+term_ua: Рахунок
+term_pl: Konto
+
+definitions:
+  - context: finance
+    meaning: Účet v účtové osnově — syntetický nebo analytický účet pro zaúčtování pohybů.
+    en_gui: Account
+    en_code: Account
+    obsolete: ChartOfAccounts

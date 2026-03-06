@@ -1,0 +1,13 @@
+term_cs: Předkontace
+term_en: Account assignment
+term_ro: Atribuire cont
+term_it: Assegnazione conto
+term_ua: Призначення рахунку
+term_pl: Przypisanie konta
+
+definitions:
+  - context: finance
+    meaning: Přiřazení účetního předpisu k dokladu — určuje na jaké účty se má doklad zaúčtovat.
+    en_gui: Account assignment
+    en_code: AccountAssignment
+    obsolete: Precontation

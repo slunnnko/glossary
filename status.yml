@@ -1,0 +1,16 @@
+term_cs: Stav
+term_en: Status
+term_ro: Stare
+term_it: Stato
+term_ua: Стан
+term_pl: Stan
+
+definitions:
+  - context: logistics
+    meaning: Status objednávky/zakázky v logistickém procesu — např. čeká na ohodnocení vychystává se balí se expeduje se.
+    en_gui: Status
+    en_code: Status
+  - context: finance
+    meaning: Stav dokladu — nezaúčtovaný zaúčtovaný stornovaný. Nebo stav pohledávky/závazku — otevřený uhrazený po splatnosti.
+    en_gui: Status / State
+    en_code: Status

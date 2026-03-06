@@ -1,0 +1,20 @@
+term_cs: Příjem
+term_en: Receiving / Income
+term_ro: Recepție / Venit
+term_it: Ricezione / Reddito
+term_ua: Прийом / Дохід
+term_pl: Przyjęcie / Dochód
+
+definitions:
+  - context: finance
+    meaning: Příjem ve smyslu výnosu nebo cash-flow — peněžní tok směrem do firmy.
+    en_gui: Income / Revenue
+    en_code: Revenue
+  - context: logistics
+    meaning: Oddělení nebo proces příjmu zboží ve skladu — kontrola zaevidování a naskladnění dodaného zboží od dodavatele.
+    en_gui: Receiving
+    en_code: Receiving
+  - context: hr
+    meaning: Příjem zaměstnance — mzda nebo celková kompenzace.
+    en_gui: Salary / Income
+    en_code: Salary

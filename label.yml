@@ -1,0 +1,12 @@
+term_cs: Etiketa
+term_en: Label
+term_ro: Etichetă
+term_it: Etichetta
+term_ua: Етикетка
+term_pl: Etykieta
+
+definitions:
+  - context: logistics
+    meaning: Samolepicí papír s čárovým kódem EAN kódem nebo AWB číslem nalepený na balík nebo produkt pro identifikaci.
+    en_gui: Label
+    en_code: Label

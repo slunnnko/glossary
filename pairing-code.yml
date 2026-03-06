@@ -1,0 +1,13 @@
+term_cs: Párovací znak
+term_en: Pairing code
+term_ro: Cod de asociere
+term_it: Codice di abbinamento
+term_ua: Код парування
+term_pl: Kod parowania
+
+definitions:
+  - context: finance
+    meaning: Kód pro párování otevřených položek na účtech — variabilní symbol nebo interní identifikátor pro spárování platby s fakturou.
+    en_gui: Pairing code
+    en_code: PairingCode
+    obsolete: PairingSymbol;PairSign;PairingSign

@@ -1,0 +1,20 @@
+term_cs: Objednávka
+term_en: Order
+term_ro: Comandă
+term_it: Ordine
+term_ua: Замовлення
+term_pl: Zamówienie
+
+definitions:
+  - context: purchasing
+    meaning: Nákupní objednávka (Purchase Order) — objednávka vystavená dodavateli na dodání zboží nebo služeb.
+    en_gui: Purchase order
+    en_code: PurchaseOrder
+  - context: logistics
+    meaning: Zákaznická objednávka — záznam o nákupu zákazníka který prochází logistickým procesem (vychystání balení expedice).
+    en_gui: Order
+    en_code: Order
+  - context: customer
+    meaning: Objednávka z pohledu zákazníka — sledování stavu úpravy storna.
+    en_gui: Customer order
+    en_code: CustomerOrder

@@ -1,0 +1,26 @@
+term_cs: Sklad
+term_en: Warehouse
+term_ro: Depozit
+term_it: Magazzino
+term_ua: Склад
+term_pl: Magazyn
+
+definitions:
+  - context: finance
+    meaning: Účetní sklad (Accounting stock) — logická evidence zásob pro účetní účely. Zachycuje hodnotu a pohyb zásob v účetních knihách.
+    en_gui: Accounting stock
+    en_code: AccountingStock
+    obsolete: Stock;StockBook;Warehouse
+  - context: finance
+    meaning: Fyzický sklad (Physical warehouse) — evidence fyzické lokace zásob bez vazby na účetní hodnotu.
+    en_gui: Physical warehouse
+    en_code: PhysicalWarehouse
+    obsolete: PhysicalStock
+  - context: logistics
+    meaning: Budova nebo část budovy určená pro logistické operace — příjem skladování vychystávání balení a expedice zboží.
+    en_gui: Warehouse / Stock
+    en_code: Warehouse
+  - context: logistics
+    meaning: Oddělení skladu — konkrétní funkční část skladu s určeným účelem (příjem expedice galerie atd.).
+    en_gui: Department
+    en_code: Department

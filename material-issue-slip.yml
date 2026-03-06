@@ -1,0 +1,16 @@
+term_cs: Výdejka
+term_en: Material issue slip
+term_ro: Bon de ieșire
+term_it: Bolla di uscita
+term_ua: Видатковий документ
+term_pl: Wydanie
+
+definitions:
+  - context: finance
+    meaning: Účetní doklad o výdeji materiálu nebo zboží ze skladu slouží jako podklad pro zaúčtování úbytku zásob.
+    en_gui: Material issue slip
+    en_code: MaterialIssueSlip
+  - context: logistics
+    meaning: Doklad potvrzující fyzický výdej zboží ze skladu — používá se při vyskladnění pro interní potřeby nebo při převodech.
+    en_gui: Material issue slip
+    en_code: MaterialIssueSlip

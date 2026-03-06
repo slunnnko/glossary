@@ -1,0 +1,16 @@
+term_cs: Zakázka
+term_en: Order / Cost center
+term_ro: Comandă / Centru de cost
+term_it: Ordine / Centro di costo
+term_ua: Замовлення
+term_pl: Zlecenie
+
+definitions:
+  - context: logistics
+    meaning: Synonymum pro zákaznickou objednávku v logistickém zpracování — zakázka vzniká po nákupu zákazníka a prochází procesem vychystání a balení.
+    en_gui: Order
+    en_code: Order
+  - context: finance
+    meaning: Interní zakázka / středisko — nákladové místo pro sledování výdajů v rámci projektu nebo oddělení.
+    en_gui: Cost center / Internal order
+    en_code: CostCenter

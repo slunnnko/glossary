@@ -1,0 +1,32 @@
+# Notino Glossary — CODEOWNERS
+#
+# Each term file can have a dedicated owner who approves changes.
+# New terms get the creator auto-added here via PR.
+#
+
+/terms/transfer-form.yml
+/terms/warehouse.yml
+/terms/document.yml
+/terms/receiving-income.yml
+/terms/return.yml
+/terms/complaint.yml
+/terms/order.yml
+/terms/order-cost-center.yml
+/terms/material-issue-slip.yml
+/terms/invoice.yml
+/terms/invoice-matching.yml
+/terms/store-branch.yml
+/terms/shift-exchange.yml
+/terms/buffer.yml
+/terms/gallery.yml
+/terms/cycle-count-inventory.yml
+/terms/vat.yml
+/terms/supplier.yml
+/terms/account.yml
+/terms/accrual.yml
+/terms/pairing-code.yml
+/terms/number-series.yml
+/terms/item.yml
+/terms/status.yml
+/terms/label.yml
+/terms/account-assignment.yml

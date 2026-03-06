@@ -1,0 +1,16 @@
+term_cs: Položka
+term_en: Item
+term_ro: Articol
+term_it: Articolo
+term_ua: Позиція
+term_pl: Pozycja
+
+definitions:
+  - context: finance
+    meaning: Řádek dokladu — jednotlivý záznam na faktuře nebo účetním dokladu s částkou sazbou DPH a předkontací.
+    en_gui: Item / Line item
+    en_code: DocumentItem
+  - context: logistics
+    meaning: Položka příjmu (receiving item) — konkrétní produkt přijatý na sklad v rámci dodávky.
+    en_gui: Receiving item
+    en_code: ReceivingItem

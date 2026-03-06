@@ -1,0 +1,20 @@
+term_cs: Vratka
+term_en: Return
+term_ro: Retur
+term_it: Reso
+term_ua: Повернення
+term_pl: Zwrot
+
+definitions:
+  - context: finance
+    meaning: Dobropis nebo refundace — finanční vrácení peněz zákazníkovi za reklamované nebo vrácené zboží.
+    en_gui: Credit note / Refund
+    en_code: CreditNote
+  - context: logistics
+    meaning: Zásilka která nebyla doručena zákazníkovi a vrací se zpět do skladu k fyzickému zpracování.
+    en_gui: Return
+    en_code: Return
+  - context: customer
+    meaning: Proces vrácení zboží zákazníkem — zahrnuje komunikaci schválení a sledování stavu vrácení.
+    en_gui: Return (process)
+    en_code: ReturnProcess

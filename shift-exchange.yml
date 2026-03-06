@@ -1,0 +1,20 @@
+term_cs: Směna
+term_en: Shift / Exchange
+term_ro: Schimb
+term_it: Turno / Cambio
+term_ua: Зміна
+term_pl: Zmiana
+
+definitions:
+  - context: logistics
+    meaning: Pracovní období ve skladu — ranní odpolední nebo noční směna s definovaným začátkem a koncem.
+    en_gui: Shift
+    en_code: Shift
+  - context: hr
+    meaning: Pracovní směna zaměstnance — součást rozvrhu práce evidovaná v docházkovém systému.
+    en_gui: Shift
+    en_code: Shift
+  - context: finance
+    meaning: Směna měn — výměna jedné měny za druhou dle kurzu (currency exchange).
+    en_gui: Exchange
+    en_code: CurrencyExchange

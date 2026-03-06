@@ -1,0 +1,16 @@
+term_cs: Převodka
+term_en: Transfer form
+term_ro: Formular de transfer
+term_it: Modulo di trasferimento
+term_ua: Перевідний документ
+term_pl: Dokument transferowy
+
+definitions:
+  - context: finance
+    meaning: Účetní doklad pro zaznamenání přesunu majetku nebo hodnot mezi účty entitami nebo středisky v rámci jedné společnosti.
+    en_gui: Transfer document
+    en_code: TransferDocument
+  - context: logistics
+    meaning: "Doklad/zakázka pro fyzický přesun zboží mezi sklady nebo na pobočku. Typy: převodka do sáčku (osobní odběr), převodka do boxu (zásobení pobočky), převodka přímý prodej."
+    en_gui: Transfer form
+    en_code: TransferForm

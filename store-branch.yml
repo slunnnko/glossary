@@ -1,0 +1,17 @@
+term_cs: Pobočka
+term_en: Store / Branch
+term_ro: Magazin / Filială
+term_it: Negozio / Filiale
+term_ua: Філія / Магазин
+term_pl: Oddział / Sklep
+
+definitions:
+  - context: logistics
+    meaning: Fyzická kamenná prodejna (store) kam se zasílají převodky se zbožím k prodeji zákazníkům.
+    en_gui: Store
+    en_code: Store
+  - context: finance
+    meaning: Organizační složka (Foreign branch) — právní/daňová entita v zahraničí.
+    en_gui: Foreign branch
+    en_code: ForeignBranch
+    obsolete: OrganizationUnit;OrganizationalUnit

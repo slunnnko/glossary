@@ -1,0 +1,20 @@
+term_cs: Dodavatel
+term_en: Supplier
+term_ro: Furnizor
+term_it: Fornitore
+term_ua: Постачальник
+term_pl: Dostawca
+
+definitions:
+  - context: purchasing
+    meaning: Obchodní partner od kterého firma nakupuje zboží. V nákupním procesu se řeší výběr zalistování a správa dodavatelů.
+    en_gui: Supplier / Vendor
+    en_code: Supplier
+  - context: logistics
+    meaning: Dodavatel v kontextu příjmu zboží — identifikace od koho přišla dodávka párování s objednávkou.
+    en_gui: Supplier
+    en_code: Supplier
+  - context: finance
+    meaning: Dodavatel jako účetní entita — subjekt vůči kterému existují závazky (faktury k úhradě).
+    en_gui: Vendor
+    en_code: Vendor

@@ -1,0 +1,12 @@
+term_cs: DPH
+term_en: VAT
+term_ro: TVA
+term_it: IVA
+term_ua: ПДВ
+term_pl: VAT
+
+definitions:
+  - context: finance
+    meaning: Daň z přidané hodnoty (VAT). Zahrnuje sazby DPH DPH plnění přiznání k DPH a související nastavení.
+    en_gui: VAT
+    en_code: Vat

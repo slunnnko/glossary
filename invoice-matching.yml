@@ -1,0 +1,16 @@
+term_cs: Zplatnění
+term_en: Invoice matching
+term_ro: Potrivire facturi
+term_it: Abbinamento fattura
+term_ua: Звірка рахунків
+term_pl: Weryfikacja faktur
+
+definitions:
+  - context: logistics
+    meaning: Invoice matching — proces párování přijaté faktury s příjemkou a objednávkou pro ověření správnosti a schválení platby.
+    en_gui: Invoice matching
+    en_code: InvoiceMatching
+  - context: finance
+    meaning: Schválení a likvidace faktury — ověření věcné a formální správnosti dokladu před zaúčtováním.
+    en_gui: Invoice approval
+    en_code: InvoiceApproval

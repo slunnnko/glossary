@@ -1,0 +1,16 @@
+term_cs: Faktura
+term_en: Invoice
+term_ro: Factură
+term_it: Fattura
+term_ua: Рахунок-фактура
+term_pl: Faktura
+
+definitions:
+  - context: finance
+    meaning: Daňový doklad vystavený za dodané zboží nebo služby. Obsahuje DPH částky splatnost.
+    en_gui: Invoice
+    en_code: Invoice
+  - context: logistics
+    meaning: Faktura v kontextu logistiky — generována automaticky po expedici objednávky (proces fakturace).
+    en_gui: Invoice
+    en_code: Invoice

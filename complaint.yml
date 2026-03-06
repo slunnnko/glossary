@@ -1,0 +1,20 @@
+term_cs: Reklamace
+term_en: Complaint
+term_ro: Reclamație
+term_it: Reclamo
+term_ua: Рекламація
+term_pl: Reklamacja
+
+definitions:
+  - context: finance
+    meaning: Finanční reklamace — nárok na dobropis nebo opravu faktury řešený účetním oddělením.
+    en_gui: Financial claim
+    en_code: FinancialClaim
+  - context: logistics
+    meaning: Oddělení reklamací (Complaints) — fyzické zpracování vrácených produktů posouzení stavu zboží.
+    en_gui: Complaints
+    en_code: Complaints
+  - context: customer
+    meaning: Zákaznická reklamace — komunikace se zákazníkem ohledně vadného nebo poškozeného zboží řešení nároku.
+    en_gui: Customer complaint
+    en_code: CustomerComplaint

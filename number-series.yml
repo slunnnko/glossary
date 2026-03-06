@@ -1,0 +1,13 @@
+term_cs: Číselná řada
+term_en: Number series
+term_ro: Serie numerică
+term_it: Serie numerica
+term_ua: Числова серія
+term_pl: Seria numeryczna
+
+definitions:
+  - context: finance
+    meaning: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
+    en_gui: Number series
+    en_code: NumberSeries
+    obsolete: NumericalSeries
