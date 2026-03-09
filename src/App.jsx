@@ -45,7 +45,6 @@ function termToYAML(termData) {
   return lines.join("\n") + "\n";
 }
 
-// UTF-8 safe base64 helpers
 function utf8ToBase64(str) {
   return btoa(
     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) =>
@@ -63,7 +62,6 @@ function base64ToUtf8(b64) {
   );
 }
 
-// ─── GitHub API helper ────────────────────────────────────────
 async function githubApi(path, { body, method = "GET", ...opts } = {}, token) {
   const res = await fetch(`https://api.github.com${path}`, {
     method,
@@ -83,7 +81,7 @@ async function githubApi(path, { body, method = "GET", ...opts } = {}, token) {
   return res.json();
 }
 
-// ─── Components ──────────────────────────────────────────────
+// ─── Shared UI ───────────────────────────────────────────────
 
 function ContextBadge({ contextKey, size = "sm" }) {
   const ctx = CONTEXTS[contextKey];
@@ -91,7 +89,7 @@ function ContextBadge({ contextKey, size = "sm" }) {
   const cls = size === "lg" ? "px-3 py-1.5 text-sm" : "px-2 py-0.5 text-xs";
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full font-medium ${cls}`}
+      className={`inline-flex items-center gap-1 rounded-full font-medium whitespace-nowrap ${cls}`}
       style={{
         backgroundColor: ctx.color + "18",
         color: ctx.color,
@@ -106,13 +104,10 @@ function ContextBadge({ contextKey, size = "sm" }) {
 function ObsoleteBadges({ items }) {
   if (!items?.length) return null;
   return (
-    <div className="mt-2 flex flex-wrap gap-1">
+    <div className="mt-1.5 flex flex-wrap gap-1">
       <span className="text-xs text-gray-400 mr-1">Obsolete:</span>
       {items.map((o) => (
-        <code
-          key={o}
-          className="text-xs bg-red-50 text-red-400 px-1.5 py-0.5 rounded border border-red-100"
-        >
+        <code key={o} className="text-xs bg-red-50 text-red-400 px-1.5 py-0.5 rounded border border-red-100">
           {o}
         </code>
       ))}
@@ -130,9 +125,7 @@ function LanguageSwitcher({ lang, setLang }) {
           onClick={() => setLang(k)}
           title={l.full}
           className={`px-2 py-1 text-xs rounded-md transition-colors ${
-            lang === k
-              ? "bg-white text-gray-900 shadow-sm font-bold"
-              : "text-gray-400 hover:text-gray-600"
+            lang === k ? "bg-white text-gray-900 shadow-sm font-bold" : "text-gray-400 hover:text-gray-600"
           }`}
         >
           {flags[k] || l.label}
@@ -142,42 +135,164 @@ function LanguageSwitcher({ lang, setLang }) {
   );
 }
 
-// ─── Edit / New Term Modal ───────────────────────────────────
-function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave }) {
-  const isNewDef = !definition;
-  const [form, setForm] = useState(() => {
-    if (isNewTerm) {
-      return {
-        term_cs: "", term_en: "", term_ro: "", term_it: "", term_ua: "", term_pl: "",
-        context: "", meaning: "", en_gui: "", en_code: "", obsolete: "",
-      };
-    }
-    return {
-      context: definition?.context || "",
-      meaning: definition?.meaning || "",
-      en_gui: definition?.en || "",
-      en_code: definition?.enCode || "",
-      obsolete: (definition?.obsolete || []).join(";"),
-      ...Object.fromEntries(
-        Object.entries(termData.translations).map(([k, v]) => [`term_${k}`, v])
-      ),
-    };
-  });
+// ─── Definition Row (inside EditModal) ───────────────────────
+function DefRow({ def, total, usedContexts, onChange, onRemove, onCopy }) {
+  const [copyOpen, setCopyOpen] = useState(false);
+  const available = Object.keys(CONTEXTS).filter((k) => !usedContexts.includes(k));
 
-  const set = (k, v) => setForm((p) => ({ ...p, [k]: v }));
+  return (
+    <div className="rounded-xl border border-gray-200 bg-gray-50/40 p-4 space-y-3">
+      {/* Context selector + actions */}
+      <div className="flex items-end gap-2">
+        <label className="flex-1 block">
+          <span className="text-xs font-medium text-gray-500">
+            Context <span className="text-red-500">*</span>
+          </span>
+          <select
+            value={def.context}
+            onChange={(e) => onChange("context", e.target.value)}
+            className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">-- select --</option>
+            {Object.entries(CONTEXTS).map(([k, v]) => (
+              <option
+                key={k}
+                value={k}
+                disabled={usedContexts.includes(k) && k !== def.context}
+              >
+                {v.icon} {v.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* Copy to... */}
+        {available.length > 0 && (
+          <div className="relative shrink-0">
+            <button
+              type="button"
+              onClick={() => setCopyOpen((o) => !o)}
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg text-gray-500 hover:border-blue-300 hover:text-blue-600 transition-colors"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy to…
+            </button>
+            {copyOpen && (
+              <div className="absolute top-full mt-1 right-0 bg-white rounded-xl shadow-lg border border-gray-200 p-2 flex flex-wrap gap-1 z-20 min-w-max">
+                {available.map((ctx) => (
+                  <button
+                    key={ctx}
+                    type="button"
+                    onClick={() => { onCopy(ctx); setCopyOpen(false); }}
+                    className="hover:scale-105 transition-transform"
+                  >
+                    <ContextBadge contextKey={ctx} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Remove */}
+        {total > 1 && (
+          <button
+            type="button"
+            onClick={onRemove}
+            className="shrink-0 px-2.5 py-1.5 text-xs border border-gray-200 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
+          >
+            Remove
+          </button>
+        )}
+      </div>
+
+      {/* Meaning */}
+      <label className="block">
+        <span className="text-xs font-medium text-gray-500">
+          Definition (Czech) <span className="text-red-500">*</span>
+        </span>
+        <textarea
+          rows={2}
+          value={def.meaning}
+          onChange={(e) => onChange("meaning", e.target.value)}
+          className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        />
+      </label>
+
+      {/* EN fields */}
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className="text-xs font-medium text-gray-500">EN (GUI label)</span>
+          <input
+            type="text"
+            value={def.en_gui}
+            onChange={(e) => onChange("en_gui", e.target.value)}
+            className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </label>
+        <label className="block">
+          <span className="text-xs font-medium text-gray-500">EN (code name)</span>
+          <input
+            type="text"
+            value={def.en_code}
+            onChange={(e) => onChange("en_code", e.target.value)}
+            className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+          />
+        </label>
+      </div>
+
+      {/* Obsolete */}
+      <label className="block">
+        <span className="text-xs font-medium text-gray-500">Obsolete code names (semicolon-separated)</span>
+        <input
+          type="text"
+          value={def.obsolete}
+          onChange={(e) => onChange("obsolete", e.target.value)}
+          className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+        />
+      </label>
+    </div>
+  );
+}
+
+// ─── Edit Modal ───────────────────────────────────────────────
+function EditModal({ termData, isNewTerm, saving, onClose, onSave }) {
   const flags = { cs: "\u{1F1E8}\u{1F1FF}", en: "\u{1F1EC}\u{1F1E7}", ro: "\u{1F1F7}\u{1F1F4}", it: "\u{1F1EE}\u{1F1F9}", ua: "\u{1F1FA}\u{1F1E6}", pl: "\u{1F1F5}\u{1F1F1}" };
 
-  const title = isNewTerm
-    ? "Add new term"
-    : isNewDef
-    ? "Add new definition"
-    : "Edit definition";
+  const [translations, setTranslations] = useState(() =>
+    Object.fromEntries(Object.keys(LANGUAGES).map((k) => [k, termData.translations[k] || ""]))
+  );
 
-  const subtitle = isNewTerm
-    ? "Creates a new YAML file + adds you to CODEOWNERS"
-    : `Changes will update terms/${termData?.slug || "..."}.yml`;
+  const [defs, setDefs] = useState(() =>
+    isNewTerm
+      ? [{ context: "", meaning: "", en_gui: "", en_code: "", obsolete: "" }]
+      : termData.definitions.map((d) => ({
+          context: d.context,
+          meaning: d.meaning,
+          en_gui: d.en || "",
+          en_code: d.enCode || "",
+          obsolete: (d.obsolete || []).join(";"),
+        }))
+  );
 
-  const canSave = !saving && form.context && form.meaning && (isNewTerm ? form.term_cs && form.term_en : true);
+  const updateDef = (i, k, v) =>
+    setDefs((prev) => prev.map((d, idx) => (idx === i ? { ...d, [k]: v } : d)));
+  const removeDef = (i) => setDefs((prev) => prev.filter((_, idx) => idx !== i));
+  const addDef = () =>
+    setDefs((prev) => [...prev, { context: "", meaning: "", en_gui: "", en_code: "", obsolete: "" }]);
+  const copyDef = (i, targetCtx) =>
+    setDefs((prev) => [...prev, { ...prev[i], context: targetCtx }]);
+
+  const usedContexts = defs.map((d) => d.context).filter(Boolean);
+  const allDefsValid = defs.length > 0 && defs.every((d) => d.context && d.meaning);
+  const canSave =
+    !saving &&
+    allDefsValid &&
+    (isNewTerm ? translations.cs && translations.en : true);
+
+  const unusedContexts = Object.keys(CONTEXTS).filter((k) => !usedContexts.includes(k));
 
   return (
     <div
@@ -185,113 +300,106 @@ function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave })
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0">
           <div>
-            <h3 className="font-bold text-gray-900">{title}</h3>
-            <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>
+            <h3 className="font-bold text-gray-900">
+              {isNewTerm ? "Add new term" : `Edit: ${termData.translations.cs || termData.term}`}
+            </h3>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {isNewTerm
+                ? "Creates a new YAML file + adds you to CODEOWNERS"
+                : `terms/${termData.slug}.yml`}
+            </p>
           </div>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
           >
-            x
+            ×
           </button>
         </div>
 
-        <div className="px-6 py-4 space-y-4">
-          {/* Language translations */}
-          <div className="grid grid-cols-3 gap-3">
-            {Object.entries(LANGUAGES).map(([lk, lv]) => (
-              <label key={lk} className="block">
-                <span className="text-xs font-medium text-gray-500">
-                  {flags[lk]} {lv.full}
-                  {isNewTerm && (lk === "cs" || lk === "en") && (
-                    <span className="text-red-500"> *</span>
-                  )}
-                </span>
-                <input
-                  type="text"
-                  value={form[`term_${lk}`] || ""}
-                  onChange={(e) => set(`term_${lk}`, e.target.value)}
-                  readOnly={!isNewTerm}
-                  className={`mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    !isNewTerm ? "bg-gray-50 text-gray-500" : ""
-                  }`}
-                />
-              </label>
-            ))}
+        {/* Scrollable body */}
+        <div className="overflow-y-auto px-6 py-4 space-y-5 flex-1">
+          {/* Translations */}
+          <div>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Translations</p>
+            {isNewTerm ? (
+              <div className="grid grid-cols-3 gap-3">
+                {Object.entries(LANGUAGES).map(([lk, lv]) => (
+                  <label key={lk} className="block">
+                    <span className="text-xs font-medium text-gray-500">
+                      {flags[lk]} {lv.full}
+                      {(lk === "cs" || lk === "en") && <span className="text-red-500"> *</span>}
+                    </span>
+                    <input
+                      type="text"
+                      value={translations[lk]}
+                      onChange={(e) => setTranslations((p) => ({ ...p, [lk]: e.target.value }))}
+                      className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </label>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(translations).map(([lk, lv]) =>
+                  lv ? (
+                    <span key={lk} className="text-xs px-2 py-1 rounded-lg border bg-gray-50 text-gray-600 border-gray-200">
+                      <span className="font-bold opacity-40">{LANGUAGES[lk]?.label}:</span> {lv}
+                    </span>
+                  ) : null
+                )}
+              </div>
+            )}
+            {isNewTerm && (
+              <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-2">
+                File: <code className="font-mono">terms/{slugify(translations.en || "...")}.yml</code>
+              </p>
+            )}
           </div>
 
-          {isNewTerm && (
-            <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-              File will be created as <code className="font-mono">terms/{slugify(form.term_en || "...")}.yml</code>.
-              You will be added to CODEOWNERS as the owner.
+          {/* Definitions */}
+          <div>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+              Definitions
             </p>
-          )}
-
-          <label className="block">
-            <span className="text-xs font-medium text-gray-500">Context <span className="text-red-500">*</span></span>
-            <select
-              value={form.context}
-              onChange={(e) => set("context", e.target.value)}
-              className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">-- select --</option>
-              {Object.entries(CONTEXTS).map(([k, v]) => (
-                <option key={k} value={k}>
-                  {v.icon} {v.label}
-                </option>
+            <div className="space-y-3">
+              {defs.map((def, i) => (
+                <DefRow
+                  key={i}
+                  def={def}
+                  index={i}
+                  total={defs.length}
+                  usedContexts={usedContexts}
+                  onChange={(k, v) => updateDef(i, k, v)}
+                  onRemove={() => removeDef(i)}
+                  onCopy={(ctx) => copyDef(i, ctx)}
+                />
               ))}
-            </select>
-          </label>
-          <label className="block">
-            <span className="text-xs font-medium text-gray-500">
-              Definition (meaning in Czech) <span className="text-red-500">*</span>
-            </span>
-            <textarea
-              rows={3}
-              value={form.meaning}
-              onChange={(e) => set("meaning", e.target.value)}
-              className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <label className="block">
-              <span className="text-xs font-medium text-gray-500">EN (GUI label)</span>
-              <input
-                type="text"
-                value={form.en_gui}
-                onChange={(e) => set("en_gui", e.target.value)}
-                className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </label>
-            <label className="block">
-              <span className="text-xs font-medium text-gray-500">EN (code name)</span>
-              <input
-                type="text"
-                value={form.en_code}
-                onChange={(e) => set("en_code", e.target.value)}
-                className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-              />
-            </label>
+            </div>
+
+            {unusedContexts.length > 0 && (
+              <button
+                type="button"
+                onClick={addDef}
+                className="mt-3 w-full py-2 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl border border-dashed border-gray-200 hover:border-blue-300 transition-colors flex items-center justify-center gap-1"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add another context
+              </button>
+            )}
           </div>
-          <label className="block">
-            <span className="text-xs font-medium text-gray-500">
-              Obsolete code names (semicolon-separated)
-            </span>
-            <input
-              type="text"
-              value={form.obsolete}
-              onChange={(e) => set("obsolete", e.target.value)}
-              className="mt-1 w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
-            />
-          </label>
         </div>
 
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
+        {/* Footer */}
+        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between shrink-0">
           <p className="text-xs text-gray-400 flex items-center gap-1">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
@@ -307,7 +415,7 @@ function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave })
               Cancel
             </button>
             <button
-              onClick={() => onSave(form, isNewTerm, isNewDef)}
+              onClick={() => onSave(translations, defs, isNewTerm)}
               disabled={!canSave}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5"
             >
@@ -324,7 +432,7 @@ function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave })
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
-                  {isNewTerm ? "Create Term & PR" : isNewDef ? "Add Def & Create PR" : "Update & Create PR"}
+                  {isNewTerm ? "Create Term & PR" : "Save & Create PR"}
                 </>
               )}
             </button>
@@ -335,6 +443,7 @@ function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave })
   );
 }
 
+// ─── Toast ────────────────────────────────────────────────────
 function Toast({ data, onClose }) {
   if (!data) return null;
   const bg = data.error ? "bg-red-600" : "bg-green-600";
@@ -364,7 +473,7 @@ function Toast({ data, onClose }) {
           <p className="text-xs opacity-80">{data.subtitle}</p>
         )}
       </div>
-      <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100 shrink-0">x</button>
+      <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100 shrink-0">×</button>
     </div>
   );
 }
@@ -396,23 +505,20 @@ function TermCard({ item, lang, onEdit }) {
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <code className="text-xs text-gray-300 font-mono hidden sm:block">
-            {item.slug}.yml
-          </code>
+          <code className="text-xs text-gray-300 font-mono hidden sm:block">{item.slug}.yml</code>
           <svg
             className={`w-5 h-5 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
       </button>
+
       {open && (
-        <div className="px-5 pb-5 border-t border-gray-100 pt-4">
+        <div className="border-t border-gray-100">
           {/* Translation strip */}
-          <div className="mb-4 flex flex-wrap gap-2 items-center pb-3 border-b border-gray-50">
+          <div className="px-5 pt-3 pb-2 flex flex-wrap gap-1.5 border-b border-gray-50">
             {Object.entries(item.translations).map(([lk, lv]) =>
               lv ? (
                 <span
@@ -423,27 +529,30 @@ function TermCard({ item, lang, onEdit }) {
                       : "bg-gray-50 text-gray-500 border-gray-200"
                   }`}
                 >
-                  <span className="font-bold opacity-50">{LANGUAGES[lk]?.label}:</span> {lv}
+                  <span className="font-bold opacity-40">{LANGUAGES[lk]?.label}:</span> {lv}
                 </span>
               ) : null
             )}
           </div>
-          {/* Definitions */}
-          <div className="space-y-3">
+
+          {/* Definitions — compact, context badge inline */}
+          <div className="px-5 pt-3 pb-2 divide-y divide-gray-50">
             {item.definitions.map((def, i) => (
-              <div key={i} className="flex gap-3 group">
-                <div className="pt-0.5 shrink-0">
-                  <ContextBadge contextKey={def.context} size="lg" />
+              <div key={i} className="flex items-start gap-2.5 py-2.5 group">
+                <div className="shrink-0 pt-px">
+                  <ContextBadge contextKey={def.context} size="sm" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-gray-700 text-sm leading-relaxed">{def.meaning}</p>
-                  {def.en && (
-                    <div className="mt-1.5 flex flex-wrap gap-2 items-center">
-                      <code className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-100">
-                        EN: {def.en}
-                      </code>
+                  {(def.en || def.enCode) && (
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      {def.en && (
+                        <code className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100">
+                          EN: {def.en}
+                        </code>
+                      )}
                       {def.enCode && (
-                        <code className="text-xs bg-gray-50 text-gray-500 px-2 py-0.5 rounded border border-gray-200 font-mono">
+                        <code className="text-xs bg-gray-50 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200 font-mono">
                           {def.enCode}
                         </code>
                       )}
@@ -451,27 +560,22 @@ function TermCard({ item, lang, onEdit }) {
                   )}
                   <ObsoleteBadges items={def.obsolete} />
                 </div>
-                <button
-                  onClick={() => onEdit(item, def)}
-                  className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity self-start mt-0.5 p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-blue-600"
-                  title="Edit this definition"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </button>
               </div>
             ))}
           </div>
-          <button
-            onClick={() => onEdit(item, null)}
-            className="mt-4 w-full py-2 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-dashed border-gray-200 hover:border-blue-300 transition-colors flex items-center justify-center gap-1"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add definition in another context
-          </button>
+
+          {/* Edit button */}
+          <div className="px-5 pb-4">
+            <button
+              onClick={() => onEdit(item)}
+              className="w-full py-2 text-xs text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-dashed border-gray-200 hover:border-blue-300 transition-colors flex items-center justify-center gap-1.5"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              Edit term / manage contexts
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -485,18 +589,10 @@ function StatsBar({ terms }) {
   ).length;
   return (
     <div className="flex flex-wrap gap-6 text-sm text-gray-500 mb-6 bg-gray-50 rounded-xl px-5 py-3">
-      <span>
-        <strong className="text-gray-900">{terms.length}</strong> terms
-      </span>
-      <span>
-        <strong className="text-gray-900">{defs}</strong> definitions
-      </span>
-      <span>
-        <strong className="text-amber-600">{multi}</strong> multi-context
-      </span>
-      <span className="text-xs text-gray-400 self-center">
-        Source: <code>terms/*.yml</code>
-      </span>
+      <span><strong className="text-gray-900">{terms.length}</strong> terms</span>
+      <span><strong className="text-gray-900">{defs}</strong> definitions</span>
+      <span><strong className="text-amber-600">{multi}</strong> multi-context</span>
+      <span className="text-xs text-gray-400 self-center">Source: <code>terms/*.yml</code></span>
     </div>
   );
 }
@@ -508,7 +604,7 @@ export default function App() {
   const [selCtx, setSelCtx] = useState(null);
   const [onlyMulti, setOnlyMulti] = useState(false);
   const [lang, setLang] = useState("cs");
-  const [editing, setEditing] = useState(null); // { termData, definition, isNewTerm }
+  const [editing, setEditing] = useState(null); // { termData, isNewTerm }
   const [toast, setToast] = useState(null);
   const [saving, setSaving] = useState(false);
   const token = import.meta.env.VITE_GITHUB_TOKEN || "";
@@ -530,10 +626,7 @@ export default function App() {
     }
     if (selCtx) {
       result = result
-        .map((t) => ({
-          ...t,
-          definitions: t.definitions.filter((d) => d.context === selCtx),
-        }))
+        .map((t) => ({ ...t, definitions: t.definitions.filter((d) => d.context === selCtx) }))
         .filter((t) => t.definitions.length > 0);
     }
     if (onlyMulti) {
@@ -552,52 +645,44 @@ export default function App() {
     const g = {};
     Object.keys(CONTEXTS).forEach((c) => {
       g[c] = TERMS.filter((t) => t.definitions.some((d) => d.context === c))
-        .map((t) => ({
-          ...t,
-          definitions: t.definitions.filter((d) => d.context === c),
-        }))
-        .sort((a, b) =>
-          (a.translations[lang] || a.term).localeCompare(b.translations[lang] || b.term)
-        );
+        .map((t) => ({ ...t, definitions: t.definitions.filter((d) => d.context === c) }))
+        .sort((a, b) => (a.translations[lang] || a.term).localeCompare(b.translations[lang] || b.term));
     });
     return g;
   }, [lang]);
 
-  const handleEdit = useCallback((termData, definition) => {
-    setEditing({ termData, definition, isNewTerm: false });
+  const handleEdit = useCallback((termData) => {
+    setEditing({ termData, isNewTerm: false });
   }, []);
 
   const handleNewTerm = useCallback(() => {
     setEditing({
       termData: { slug: "", term: "", translations: {}, definitions: [] },
-      definition: null,
       isNewTerm: true,
     });
   }, []);
 
-  const handleSave = useCallback(async (form, isNewTerm, isNewDef) => {
+  // onSave(translations, defs, isNewTerm)
+  // translations: { cs, en, ro, it, ua, pl }
+  // defs: [{ context, meaning, en_gui, en_code, obsolete }]
+  const handleSave = useCallback(async (translations, defs, isNewTerm) => {
     if (!token) {
-      setToast({ title: "Not configured", subtitle: "VITE_GITHUB_TOKEN secret is not set in GitHub Actions.", error: true });
+      setToast({ title: "Not configured", subtitle: "VITE_GITHUB_TOKEN secret is not set.", error: true });
       setTimeout(() => setToast(null), 8000);
       return;
     }
 
     setSaving(true);
     try {
-      // 1. Get authenticated user
       const user = await githubApi("/user", {}, token);
       const login = user.login;
 
-      // 2. Get main branch SHA
       const refData = await githubApi(
-        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/ref/heads/main`,
-        {},
-        token
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/ref/heads/main`, {}, token
       );
       const mainSha = refData.object.sha;
 
-      // 3. Create new branch
-      const termSlug = isNewTerm ? slugify(form.term_en) : editing.termData.slug;
+      const termSlug = isNewTerm ? slugify(translations.en) : editing.termData.slug;
       const branchName = `glossary/${termSlug}-${Date.now()}`;
       await githubApi(
         `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/refs`,
@@ -605,63 +690,32 @@ export default function App() {
         token
       );
 
-      // 4. Build updated term data
-      const newDef = {
-        context: form.context,
-        meaning: form.meaning,
-        ...(form.en_gui ? { en: form.en_gui } : {}),
-        ...(form.en_code ? { enCode: form.en_code } : {}),
-        ...(form.obsolete ? { obsolete: form.obsolete.split(";").filter(Boolean) } : {}),
+      const updatedTermData = {
+        translations,
+        definitions: defs.map((d) => ({
+          context: d.context,
+          meaning: d.meaning,
+          ...(d.en_gui ? { en: d.en_gui } : {}),
+          ...(d.en_code ? { enCode: d.en_code } : {}),
+          ...(d.obsolete ? { obsolete: d.obsolete.split(";").filter(Boolean) } : {}),
+        })),
       };
-
-      let updatedTermData;
-      if (isNewTerm) {
-        updatedTermData = {
-          translations: {
-            cs: form.term_cs || "",
-            en: form.term_en || "",
-            ro: form.term_ro || "",
-            it: form.term_it || "",
-            ua: form.term_ua || "",
-            pl: form.term_pl || "",
-          },
-          definitions: [newDef],
-        };
-      } else if (isNewDef) {
-        updatedTermData = {
-          translations: editing.termData.translations,
-          definitions: [...editing.termData.definitions, newDef],
-        };
-      } else {
-        updatedTermData = {
-          translations: editing.termData.translations,
-          definitions: editing.termData.definitions.map((d) =>
-            d === editing.definition ? newDef : d
-          ),
-        };
-      }
 
       const yamlContent = termToYAML(updatedTermData);
       const base64Content = utf8ToBase64(yamlContent);
       const filePath = `terms/${termSlug}.yml`;
 
-      // Get existing file SHA for PUT (required when updating)
       let existingFileSha;
       if (!isNewTerm) {
         const fileData = await githubApi(
-          `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}?ref=main`,
-          {},
-          token
+          `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}?ref=main`, {}, token
         );
         existingFileSha = fileData.sha;
       }
 
-      // Put file
       const commitMsg = isNewTerm
-        ? `feat: add term "${form.term_cs}" (${form.term_en})`
-        : isNewDef
-        ? `feat: add ${form.context} definition to "${editing.termData.term}"`
-        : `fix: update ${form.context} definition of "${editing.termData.term}"`;
+        ? `feat: add term "${translations.cs}" (${translations.en})`
+        : `fix: update definitions of "${editing.termData.term}"`;
 
       await githubApi(
         `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
@@ -677,7 +731,6 @@ export default function App() {
         token
       );
 
-      // 4b. For new terms, update CODEOWNERS
       if (isNewTerm) {
         const coPath = `repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/CODEOWNERS`;
         const newLine = `/terms/${termSlug}.yml @${login}`;
@@ -688,18 +741,17 @@ export default function App() {
           await githubApi(`/${coPath}`, {
             method: "PUT",
             body: {
-              message: `chore: add CODEOWNERS entry for ${form.term_en}`,
+              message: `chore: add CODEOWNERS entry for ${translations.en}`,
               content: utf8ToBase64(updated),
               sha: coData.sha,
               branch: branchName,
             },
           }, token);
         } catch {
-          // CODEOWNERS doesn't exist yet — create it
           await githubApi(`/${coPath}`, {
             method: "PUT",
             body: {
-              message: `chore: create CODEOWNERS for ${form.term_en}`,
+              message: `chore: create CODEOWNERS for ${translations.en}`,
               content: utf8ToBase64(newLine + "\n"),
               branch: branchName,
             },
@@ -707,31 +759,22 @@ export default function App() {
         }
       }
 
-      // 5. Create PR
       const prTitle = isNewTerm
-        ? `feat: Add term "${form.term_cs}" (${form.term_en})`
-        : isNewDef
-        ? `feat: Add ${form.context} definition to "${editing.termData.term}"`
-        : `fix: Update ${form.context} definition of "${editing.termData.term}"`;
+        ? `feat: Add term "${translations.cs}" (${translations.en})`
+        : `fix: Update definitions of "${editing.termData.term}"`;
 
       const prBody = isNewTerm
-        ? `Adds new glossary term: **${form.term_cs}** / ${form.term_en}\n\nCreated via Glossary UI by @${login}`
-        : `Updates definition for **${editing.termData.term}** in context \`${form.context}\`\n\nCreated via Glossary UI by @${login}`;
+        ? `Adds new glossary term: **${translations.cs}** / ${translations.en}\n\nCreated via Glossary UI by @${login}`
+        : `Updates definitions for **${editing.termData.term}** (${defs.map((d) => d.context).join(", ")})\n\nCreated via Glossary UI by @${login}`;
 
       const pr = await githubApi(
         `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/pulls`,
-        {
-          method: "POST",
-          body: { title: prTitle, body: prBody, head: branchName, base: "main" },
-        },
+        { method: "POST", body: { title: prTitle, body: prBody, head: branchName, base: "main" } },
         token
       );
 
       setEditing(null);
-      setToast({
-        title: isNewTerm ? "Term created!" : isNewDef ? "Definition added!" : "Definition updated!",
-        prUrl: pr.html_url,
-      });
+      setToast({ title: isNewTerm ? "Term created!" : "Definitions updated!", prUrl: pr.html_url });
       setTimeout(() => setToast(null), 30000);
     } catch (err) {
       setToast({ title: "Error creating PR", subtitle: err.message, error: true });
@@ -743,16 +786,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* ─── Header ────────────────────────────── */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-20 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <h1 className="text-xl font-bold text-gray-900 tracking-tight">
-                Notino Glossary
-              </h1>
+              <h1 className="text-xl font-bold text-gray-900 tracking-tight">Notino Glossary</h1>
               <p className="text-xs text-gray-400 mt-0.5">
-                Multi-context company dictionary &middot; YAML per term &middot; CODEOWNERS &middot; PR workflow
+                Multi-context company dictionary · YAML per term · CODEOWNERS · PR workflow
               </p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -786,12 +826,7 @@ export default function App() {
                 placeholder={`Search in ${LANGUAGES[lang]?.full || "any language"}...`}
                 className="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
               />
-              <svg
-                className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -817,7 +852,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* ─── Main ──────────────────────────────── */}
       <main className="max-w-5xl mx-auto px-4 py-6">
         <StatsBar terms={filtered} />
 
@@ -839,11 +873,7 @@ export default function App() {
                   className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-colors ${
                     selCtx === k ? "text-white" : "bg-white border-gray-200"
                   }`}
-                  style={
-                    selCtx === k
-                      ? { backgroundColor: v.color, borderColor: v.color }
-                      : { color: v.color }
-                  }
+                  style={selCtx === k ? { backgroundColor: v.color, borderColor: v.color } : { color: v.color }}
                 >
                   {v.icon} {v.label}
                 </button>
@@ -878,37 +908,23 @@ export default function App() {
               if (!items.length) return null;
               return (
                 <section key={key}>
-                  <div
-                    className="flex items-center gap-2 mb-3 pb-2 border-b-2"
-                    style={{ borderColor: ctx.color + "40" }}
-                  >
+                  <div className="flex items-center gap-2 mb-3 pb-2 border-b-2" style={{ borderColor: ctx.color + "40" }}>
                     <span className="text-2xl">{ctx.icon}</span>
-                    <h2 className="text-lg font-bold" style={{ color: ctx.color }}>
-                      {ctx.label}
-                    </h2>
-                    <span className="text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5 ml-1">
-                      {items.length}
-                    </span>
+                    <h2 className="text-lg font-bold" style={{ color: ctx.color }}>{ctx.label}</h2>
+                    <span className="text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5 ml-1">{items.length}</span>
                   </div>
                   <div className="grid gap-2">
                     {items.map((t) => {
                       const dn = t.translations[lang] || t.term;
                       const isTr = lang !== "cs" && t.translations[lang];
                       const other = [
-                        ...new Set(
-                          TERMS.find((o) => o.term === t.term)?.definitions.map((d) => d.context) || []
-                        ),
+                        ...new Set(TERMS.find((o) => o.term === t.term)?.definitions.map((d) => d.context) || []),
                       ].filter((c) => c !== key);
                       return (
-                        <div
-                          key={t.term}
-                          className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex items-start justify-between gap-3"
-                        >
+                        <div key={t.term} className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex items-start justify-between gap-3">
                           <div>
                             <span className="font-semibold text-gray-900">{dn}</span>
-                            {isTr && (
-                              <span className="text-sm text-gray-400 ml-1.5">({t.term})</span>
-                            )}
+                            {isTr && <span className="text-sm text-gray-400 ml-1.5">({t.term})</span>}
                             {t.definitions[0]?.en && (
                               <code className="ml-2 text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded">
                                 {t.definitions[0].en}
@@ -919,9 +935,7 @@ export default function App() {
                           {other.length > 0 && (
                             <div className="shrink-0 flex flex-col items-end gap-1">
                               <span className="text-xs text-amber-600 font-medium">Also in:</span>
-                              {other.map((c) => (
-                                <ContextBadge key={c} contextKey={c} />
-                              ))}
+                              {other.map((c) => <ContextBadge key={c} contextKey={c} />)}
                             </div>
                           )}
                         </div>
@@ -937,14 +951,13 @@ export default function App() {
 
       <footer className="max-w-5xl mx-auto px-4 py-8 text-center text-xs text-gray-400">
         <p>
-          Notino Glossary &middot; Source: <code className="bg-gray-100 px-1 rounded">terms/*.yml</code> &middot; CODEOWNERS per term &middot; Edits create PRs
+          Notino Glossary · Source: <code className="bg-gray-100 px-1 rounded">terms/*.yml</code> · CODEOWNERS per term · Edits create PRs
         </p>
       </footer>
 
       {editing && (
         <EditModal
           termData={editing.termData}
-          definition={editing.definition}
           isNewTerm={editing.isNewTerm}
           saving={saving}
           onClose={() => !saving && setEditing(null)}
