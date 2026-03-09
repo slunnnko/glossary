@@ -68,6 +68,40 @@ function unquote(s) {
   return s;
 }
 
+// ─── Parse contexts.yml ──────────────────────────────────────
+function parseContextsYAML(text) {
+  const result = {};
+  let key = null;
+  for (const raw of text.split("\n")) {
+    const line = raw.trimEnd();
+    if (!line || line.startsWith("#")) continue;
+    const top = /^([a-z_][a-z0-9_]*):\s*$/.exec(line);
+    if (top) { key = top[1]; result[key] = {}; continue; }
+    if (key) {
+      const prop = /^\s{2}(\w+):\s*(.+)/.exec(line);
+      if (prop) result[key][prop[1]] = unquote(prop[2].trim());
+    }
+  }
+  return result;
+}
+
+const CONTEXTS_FILE = join(ROOT, "contexts.yml");
+let contexts;
+try {
+  contexts = parseContextsYAML(readFileSync(CONTEXTS_FILE, "utf-8"));
+} catch {
+  // fallback if contexts.yml is missing
+  contexts = {
+    finance:   { label: "Finance",           color: "#2563eb", icon: "💰" },
+    logistics: { label: "Logistika",         color: "#059669", icon: "📦" },
+    purchasing:{ label: "Nákup",             color: "#d97706", icon: "🛒" },
+    it:        { label: "IT / Development",  color: "#7c3aed", icon: "💻" },
+    customer:  { label: "Zákaznický servis", color: "#dc2626", icon: "🎧" },
+    hr:        { label: "HR",               color: "#0891b2", icon: "👥" },
+    marketing: { label: "Marketing",        color: "#e11d48", icon: "📣" },
+  };
+}
+
 // ─── Build ───────────────────────────────────────────────────
 const files = readdirSync(TERMS_DIR).filter((f) => f.endsWith(".yml")).sort();
 
@@ -108,15 +142,7 @@ terms.sort((a, b) => a.term.localeCompare(b.term, "cs"));
 const output = {
   _generated: new Date().toISOString(),
   _source: "terms/*.yml",
-  contexts: {
-    finance: { label: "Finance", color: "#2563eb", icon: "💰" },
-    logistics: { label: "Logistika", color: "#059669", icon: "📦" },
-    purchasing: { label: "Nákup", color: "#d97706", icon: "🛒" },
-    it: { label: "IT / Development", color: "#7c3aed", icon: "💻" },
-    customer: { label: "Zákaznický servis", color: "#dc2626", icon: "🎧" },
-    hr: { label: "HR", color: "#0891b2", icon: "👥" },
-    marketing: { label: "Marketing", color: "#e11d48", icon: "📣" },
-  },
+  contexts,
   languages: {
     cs: { label: "CZ", full: "Čeština" },
     en: { label: "EN", full: "English" },
