@@ -3,9 +3,9 @@ import data from "./terms.json";
 
 const { contexts: CONTEXTS, languages: LANGUAGES, terms: TERMS } = data;
 
-// ─── GitHub config (set these for your repo) ────────────────
-const GITHUB_OWNER = "YOUR_USERNAME";
-const GITHUB_REPO = "notino-glossary";
+// ─── GitHub config ────────────────────────────────────────────
+const GITHUB_OWNER = "slunnnko";
+const GITHUB_REPO = "glossary";
 // ─────────────────────────────────────────────────────────────
 
 function slugify(str) {
@@ -43,6 +43,44 @@ function termToYAML(termData) {
       lines.push(`    obsolete: ${yamlQuote(def.obsolete.join(";"))}`);
   }
   return lines.join("\n") + "\n";
+}
+
+// UTF-8 safe base64 helpers
+function utf8ToBase64(str) {
+  return btoa(
+    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+      String.fromCharCode(parseInt(p1, 16))
+    )
+  );
+}
+
+function base64ToUtf8(b64) {
+  return decodeURIComponent(
+    atob(b64.replace(/\s/g, ""))
+      .split("")
+      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+      .join("")
+  );
+}
+
+// ─── GitHub API helper ────────────────────────────────────────
+async function githubApi(path, { body, method = "GET", ...opts } = {}, token) {
+  const res = await fetch(`https://api.github.com${path}`, {
+    method,
+    ...opts,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      ...(opts.headers || {}),
+    },
+    ...(body != null ? { body: JSON.stringify(body) } : {}),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `GitHub API error: ${res.status}`);
+  }
+  return res.json();
 }
 
 // ─── Components ──────────────────────────────────────────────
@@ -105,7 +143,7 @@ function LanguageSwitcher({ lang, setLang }) {
 }
 
 // ─── Edit / New Term Modal ───────────────────────────────────
-function EditModal({ definition, termData, isNewTerm, onClose, onSave }) {
+function EditModal({ definition, termData, isNewTerm, saving, onClose, onSave }) {
   const isNewDef = !definition;
   const [form, setForm] = useState(() => {
     if (isNewTerm) {
@@ -139,7 +177,7 @@ function EditModal({ definition, termData, isNewTerm, onClose, onSave }) {
     ? "Creates a new YAML file + adds you to CODEOWNERS"
     : `Changes will update terms/${termData?.slug || "..."}.yml`;
 
-  const canSave = form.context && form.meaning && (isNewTerm ? form.term_cs && form.term_en : true);
+  const canSave = !saving && form.context && form.meaning && (isNewTerm ? form.term_cs && form.term_en : true);
 
   return (
     <div
@@ -263,7 +301,8 @@ function EditModal({ definition, termData, isNewTerm, onClose, onSave }) {
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+              disabled={saving}
+              className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:opacity-40"
             >
               Cancel
             </button>
@@ -272,10 +311,22 @@ function EditModal({ definition, termData, isNewTerm, onClose, onSave }) {
               disabled={!canSave}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              {isNewTerm ? "Create Term & PR" : isNewDef ? "Add Def & Create PR" : "Update & Create PR"}
+              {saving ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
+                  </svg>
+                  Creating PR…
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  {isNewTerm ? "Create Term & PR" : isNewDef ? "Add Def & Create PR" : "Update & Create PR"}
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -286,16 +337,34 @@ function EditModal({ definition, termData, isNewTerm, onClose, onSave }) {
 
 function Toast({ data, onClose }) {
   if (!data) return null;
+  const bg = data.error ? "bg-red-600" : "bg-green-600";
   return (
-    <div className="fixed bottom-4 right-4 bg-green-600 text-white rounded-xl shadow-2xl px-5 py-3 flex items-center gap-3 z-50 max-w-md">
-      <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-      </svg>
-      <div>
+    <div className={`fixed bottom-4 right-4 ${bg} text-white rounded-xl shadow-2xl px-5 py-3 flex items-start gap-3 z-50 max-w-md`}>
+      {data.error ? (
+        <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      ) : (
+        <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      )}
+      <div className="flex-1 min-w-0">
         <p className="font-medium text-sm">{data.title}</p>
-        <p className="text-xs opacity-80">{data.subtitle}</p>
+        {data.prUrl ? (
+          <a
+            href={data.prUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs opacity-90 underline underline-offset-2 hover:opacity-100 break-all"
+          >
+            {data.prUrl}
+          </a>
+        ) : (
+          <p className="text-xs opacity-80">{data.subtitle}</p>
+        )}
       </div>
-      <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100">x</button>
+      <button onClick={onClose} className="ml-2 opacity-60 hover:opacity-100 shrink-0">x</button>
     </div>
   );
 }
@@ -441,6 +510,8 @@ export default function App() {
   const [lang, setLang] = useState("cs");
   const [editing, setEditing] = useState(null); // { termData, definition, isNewTerm }
   const [toast, setToast] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const token = import.meta.env.VITE_GITHUB_TOKEN || "";
 
   const filtered = useMemo(() => {
     let result = [...TERMS];
@@ -504,59 +575,171 @@ export default function App() {
     });
   }, []);
 
-  const handleSave = useCallback((form, isNewTerm, isNewDef) => {
-    /*
-     * Production GitHub API flow:
-     *
-     * 1. Get authenticated user:
-     *    GET /user → login (e.g. "jiri-polasek")
-     *
-     * 2. Get default branch SHA:
-     *    GET /repos/{owner}/{repo}/git/ref/heads/main → sha
-     *
-     * 3. Create a new branch:
-     *    POST /repos/{owner}/{repo}/git/refs
-     *    { ref: "refs/heads/glossary/{slug}-{timestamp}", sha }
-     *
-     * 4a. For EXISTING term (edit/add definition):
-     *    GET /repos/{owner}/{repo}/contents/terms/{slug}.yml?ref=main → sha, content
-     *    Decode base64, parse YAML, modify definition, re-serialize
-     *    PUT /repos/{owner}/{repo}/contents/terms/{slug}.yml
-     *    { message, content: base64(newYAML), sha, branch }
-     *
-     * 4b. For NEW term:
-     *    Serialize form → YAML
-     *    PUT /repos/{owner}/{repo}/contents/terms/{newSlug}.yml
-     *    { message, content: base64(yaml), branch }
-     *
-     *    ALSO update CODEOWNERS:
-     *    GET /repos/{owner}/{repo}/contents/CODEOWNERS?ref=main → sha, content
-     *    Append: /terms/{newSlug}.yml @{login}
-     *    PUT /repos/{owner}/{repo}/contents/CODEOWNERS
-     *    { message, content: base64(newCODEOWNERS), sha, branch }
-     *
-     * 5. Create Pull Request:
-     *    POST /repos/{owner}/{repo}/pulls
-     *    { title, body, head: branch, base: "main" }
-     */
-
-    const ctxLabel = CONTEXTS[form.context]?.label || form.context;
-    const slug = isNewTerm ? slugify(form.term_en) : null;
-
-    if (isNewTerm) {
-      setToast({
-        title: "New term created",
-        subtitle: `PR: terms/${slug}.yml ("${form.term_cs}") + CODEOWNERS updated`,
-      });
-    } else {
-      setToast({
-        title: isNewDef ? "New definition added" : "Definition updated",
-        subtitle: `PR: "${form.term_cs}" (${ctxLabel}) in terms/*.yml`,
-      });
+  const handleSave = useCallback(async (form, isNewTerm, isNewDef) => {
+    if (!token) {
+      setToast({ title: "Not configured", subtitle: "VITE_GITHUB_TOKEN secret is not set in GitHub Actions.", error: true });
+      setTimeout(() => setToast(null), 8000);
+      return;
     }
-    setEditing(null);
-    setTimeout(() => setToast(null), 6000);
-  }, []);
+
+    setSaving(true);
+    try {
+      // 1. Get authenticated user
+      const user = await githubApi("/user", {}, token);
+      const login = user.login;
+
+      // 2. Get main branch SHA
+      const refData = await githubApi(
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/ref/heads/main`,
+        {},
+        token
+      );
+      const mainSha = refData.object.sha;
+
+      // 3. Create new branch
+      const termSlug = isNewTerm ? slugify(form.term_en) : editing.termData.slug;
+      const branchName = `glossary/${termSlug}-${Date.now()}`;
+      await githubApi(
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/git/refs`,
+        { method: "POST", body: { ref: `refs/heads/${branchName}`, sha: mainSha } },
+        token
+      );
+
+      // 4. Build updated term data
+      const newDef = {
+        context: form.context,
+        meaning: form.meaning,
+        ...(form.en_gui ? { en: form.en_gui } : {}),
+        ...(form.en_code ? { enCode: form.en_code } : {}),
+        ...(form.obsolete ? { obsolete: form.obsolete.split(";").filter(Boolean) } : {}),
+      };
+
+      let updatedTermData;
+      if (isNewTerm) {
+        updatedTermData = {
+          translations: {
+            cs: form.term_cs || "",
+            en: form.term_en || "",
+            ro: form.term_ro || "",
+            it: form.term_it || "",
+            ua: form.term_ua || "",
+            pl: form.term_pl || "",
+          },
+          definitions: [newDef],
+        };
+      } else if (isNewDef) {
+        updatedTermData = {
+          translations: editing.termData.translations,
+          definitions: [...editing.termData.definitions, newDef],
+        };
+      } else {
+        updatedTermData = {
+          translations: editing.termData.translations,
+          definitions: editing.termData.definitions.map((d) =>
+            d === editing.definition ? newDef : d
+          ),
+        };
+      }
+
+      const yamlContent = termToYAML(updatedTermData);
+      const base64Content = utf8ToBase64(yamlContent);
+      const filePath = `terms/${termSlug}.yml`;
+
+      // Get existing file SHA for PUT (required when updating)
+      let existingFileSha;
+      if (!isNewTerm) {
+        const fileData = await githubApi(
+          `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}?ref=main`,
+          {},
+          token
+        );
+        existingFileSha = fileData.sha;
+      }
+
+      // Put file
+      const commitMsg = isNewTerm
+        ? `feat: add term "${form.term_cs}" (${form.term_en})`
+        : isNewDef
+        ? `feat: add ${form.context} definition to "${editing.termData.term}"`
+        : `fix: update ${form.context} definition of "${editing.termData.term}"`;
+
+      await githubApi(
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+        {
+          method: "PUT",
+          body: {
+            message: commitMsg,
+            content: base64Content,
+            branch: branchName,
+            ...(existingFileSha ? { sha: existingFileSha } : {}),
+          },
+        },
+        token
+      );
+
+      // 4b. For new terms, update CODEOWNERS
+      if (isNewTerm) {
+        const coPath = `repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/CODEOWNERS`;
+        const newLine = `/terms/${termSlug}.yml @${login}`;
+        try {
+          const coData = await githubApi(`/${coPath}?ref=main`, {}, token);
+          const current = base64ToUtf8(coData.content);
+          const updated = current.trimEnd() + "\n" + newLine + "\n";
+          await githubApi(`/${coPath}`, {
+            method: "PUT",
+            body: {
+              message: `chore: add CODEOWNERS entry for ${form.term_en}`,
+              content: utf8ToBase64(updated),
+              sha: coData.sha,
+              branch: branchName,
+            },
+          }, token);
+        } catch {
+          // CODEOWNERS doesn't exist yet — create it
+          await githubApi(`/${coPath}`, {
+            method: "PUT",
+            body: {
+              message: `chore: create CODEOWNERS for ${form.term_en}`,
+              content: utf8ToBase64(newLine + "\n"),
+              branch: branchName,
+            },
+          }, token);
+        }
+      }
+
+      // 5. Create PR
+      const prTitle = isNewTerm
+        ? `feat: Add term "${form.term_cs}" (${form.term_en})`
+        : isNewDef
+        ? `feat: Add ${form.context} definition to "${editing.termData.term}"`
+        : `fix: Update ${form.context} definition of "${editing.termData.term}"`;
+
+      const prBody = isNewTerm
+        ? `Adds new glossary term: **${form.term_cs}** / ${form.term_en}\n\nCreated via Glossary UI by @${login}`
+        : `Updates definition for **${editing.termData.term}** in context \`${form.context}\`\n\nCreated via Glossary UI by @${login}`;
+
+      const pr = await githubApi(
+        `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/pulls`,
+        {
+          method: "POST",
+          body: { title: prTitle, body: prBody, head: branchName, base: "main" },
+        },
+        token
+      );
+
+      setEditing(null);
+      setToast({
+        title: isNewTerm ? "Term created!" : isNewDef ? "Definition added!" : "Definition updated!",
+        prUrl: pr.html_url,
+      });
+      setTimeout(() => setToast(null), 30000);
+    } catch (err) {
+      setToast({ title: "Error creating PR", subtitle: err.message, error: true });
+      setTimeout(() => setToast(null), 10000);
+    } finally {
+      setSaving(false);
+    }
+  }, [token, editing]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -763,7 +946,8 @@ export default function App() {
           termData={editing.termData}
           definition={editing.definition}
           isNewTerm={editing.isNewTerm}
-          onClose={() => setEditing(null)}
+          saving={saving}
+          onClose={() => !saving && setEditing(null)}
           onSave={handleSave}
         />
       )}
