@@ -14,3 +14,5 @@ definitions:
     meaning: Vyrovnávací paměť — dočasné úložiště dat mezi dvěma procesy s různou rychlostí zpracování.
     en_gui: Buffer
     en_code: Buffer
+  - context: customer
+    meaning: the same as in logistics context
