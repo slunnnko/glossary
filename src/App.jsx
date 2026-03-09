@@ -278,7 +278,13 @@ function EditModal({ termData, isNewTerm, saving, onClose, onSave }) {
   );
 
   const updateDef = (i, k, v) =>
-    setDefs((prev) => prev.map((d, idx) => (idx === i ? { ...d, [k]: v } : d)));
+    setDefs((prev) =>
+      prev.map((d, idx) => {
+        if (idx !== i) return d;
+        if (k === "context") return { context: v, meaning: "", en_gui: "", en_code: "", obsolete: "" };
+        return { ...d, [k]: v };
+      })
+    );
   const removeDef = (i) => setDefs((prev) => prev.filter((_, idx) => idx !== i));
   const addDef = () =>
     setDefs((prev) => [...prev, { context: "", meaning: "", en_gui: "", en_code: "", obsolete: "" }]);
@@ -535,33 +541,44 @@ function TermCard({ item, lang, onEdit }) {
             )}
           </div>
 
-          {/* Definitions — compact, context badge inline */}
+          {/* Definitions — group identical content, show context badges side by side */}
           <div className="px-5 pt-3 pb-2 divide-y divide-gray-50">
-            {item.definitions.map((def, i) => (
-              <div key={i} className="flex items-start gap-2.5 py-2.5 group">
-                <div className="shrink-0 pt-px">
-                  <ContextBadge contextKey={def.context} size="sm" />
+            {(() => {
+              const groups = [];
+              for (const def of item.definitions) {
+                const key = `${def.meaning}|${def.en || ""}|${def.enCode || ""}|${(def.obsolete || []).join(";")}`;
+                const g = groups.find((x) => x.key === key);
+                if (g) g.contexts.push(def.context);
+                else groups.push({ key, def, contexts: [def.context] });
+              }
+              return groups.map((group, i) => (
+                <div key={i} className="flex items-start gap-2.5 py-2.5">
+                  <div className="shrink-0 pt-px flex flex-wrap gap-1">
+                    {group.contexts.map((c) => (
+                      <ContextBadge key={c} contextKey={c} size="sm" />
+                    ))}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-gray-700 text-sm leading-relaxed">{group.def.meaning}</p>
+                    {(group.def.en || group.def.enCode) && (
+                      <div className="mt-1 flex flex-wrap gap-1.5">
+                        {group.def.en && (
+                          <code className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100">
+                            EN: {group.def.en}
+                          </code>
+                        )}
+                        {group.def.enCode && (
+                          <code className="text-xs bg-gray-50 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200 font-mono">
+                            {group.def.enCode}
+                          </code>
+                        )}
+                      </div>
+                    )}
+                    <ObsoleteBadges items={group.def.obsolete} />
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-700 text-sm leading-relaxed">{def.meaning}</p>
-                  {(def.en || def.enCode) && (
-                    <div className="mt-1 flex flex-wrap gap-1.5">
-                      {def.en && (
-                        <code className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-100">
-                          EN: {def.en}
-                        </code>
-                      )}
-                      {def.enCode && (
-                        <code className="text-xs bg-gray-50 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200 font-mono">
-                          {def.enCode}
-                        </code>
-                      )}
-                    </div>
-                  )}
-                  <ObsoleteBadges items={def.obsolete} />
-                </div>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
 
           {/* Edit button */}
