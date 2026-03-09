@@ -11,3 +11,8 @@ definitions:
     en_gui: Number series
     en_code: NumberSeries
     obsolete: NumericalSeries
+  - context: logistics
+    meaning: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
+    en_gui: Number series
+    en_code: NumberSeries
+    obsolete: NumericalSeries
