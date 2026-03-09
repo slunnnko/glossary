@@ -1,16 +1,47 @@
-term_cs: Zakázka
-term_en: Order / Cost center
-term_ro: Comandă / Centru de cost
-term_it: Ordine / Centro di costo
-term_ua: Замовлення
-term_pl: Zlecenie
-
-definitions:
-  - context: logistics
-    meaning: Synonymum pro zákaznickou objednávku v logistickém zpracování — zakázka vzniká po nákupu zákazníka a prochází procesem vychystání a balení.
-    en_gui: Order
-    en_code: Order
-  - context: finance
-    meaning: Interní zakázka / středisko — nákladové místo pro sledování výdajů v rámci projektu nebo oddělení.
-    en_gui: Cost center / Internal order
-    en_code: CostCenter
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order-cost-center--logistics
+  title: Order / Cost center
+  description: Synonymum pro zákaznickou objednávku v logistickém zpracování — zakázka vzniká po nákupu zákazníka a prochází procesem vychystání a balení.
+  annotations:
+    glossary/term-cs: Zakázka
+    glossary/term-en: Order / Cost center
+    glossary/term-ro: Comandă / Centru de cost
+    glossary/term-it: Ordine / Centro di costo
+    glossary/term-ua: Замовлення
+    glossary/term-pl: Zlecenie
+    glossary/en-gui: Order
+    glossary/en-code: Order
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order-cost-center--finance
+  title: Order / Cost center
+  description: Interní zakázka / středisko — nákladové místo pro sledování výdajů v rámci projektu nebo oddělení.
+  annotations:
+    glossary/term-cs: Zakázka
+    glossary/term-en: Order / Cost center
+    glossary/term-ro: Comandă / Centru de cost
+    glossary/term-it: Ordine / Centro di costo
+    glossary/term-ua: Замовлення
+    glossary/term-pl: Zlecenie
+    glossary/en-gui: Cost center / Internal order
+    glossary/en-code: CostCenter
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

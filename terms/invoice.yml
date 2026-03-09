@@ -1,16 +1,47 @@
-term_cs: Faktura
-term_en: Invoice
-term_ro: Factură
-term_it: Fattura
-term_ua: Рахунок-фактура
-term_pl: Faktura
-
-definitions:
-  - context: finance
-    meaning: Daňový doklad vystavený za dodané zboží nebo služby. Obsahuje DPH částky splatnost.
-    en_gui: Invoice
-    en_code: Invoice
-  - context: logistics
-    meaning: Faktura v kontextu logistiky — generována automaticky po expedici objednávky (proces fakturace).
-    en_gui: Invoice
-    en_code: Invoice
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: invoice--finance
+  title: Invoice
+  description: Daňový doklad vystavený za dodané zboží nebo služby. Obsahuje DPH částky splatnost.
+  annotations:
+    glossary/term-cs: Faktura
+    glossary/term-en: Invoice
+    glossary/term-ro: Factură
+    glossary/term-it: Fattura
+    glossary/term-ua: Рахунок-фактура
+    glossary/term-pl: Faktura
+    glossary/en-gui: Invoice
+    glossary/en-code: Invoice
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: invoice--logistics
+  title: Invoice
+  description: Faktura v kontextu logistiky — generována automaticky po expedici objednávky (proces fakturace).
+  annotations:
+    glossary/term-cs: Faktura
+    glossary/term-en: Invoice
+    glossary/term-ro: Factură
+    glossary/term-it: Fattura
+    glossary/term-ua: Рахунок-фактура
+    glossary/term-pl: Faktura
+    glossary/en-gui: Invoice
+    glossary/en-code: Invoice
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

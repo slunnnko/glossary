@@ -1,18 +1,49 @@
-term_cs: Číselná řada
-term_en: Number series
-term_ro: Serie numerică
-term_it: Serie numerica
-term_ua: Числова серія
-term_pl: Seria numeryczna
-
-definitions:
-  - context: finance
-    meaning: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
-    en_gui: Number series
-    en_code: NumberSeries
-    obsolete: NumericalSeries
-  - context: logistics
-    meaning: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
-    en_gui: Number series
-    en_code: NumberSeries
-    obsolete: NumericalSeries
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: number-series--finance
+  title: Number series
+  description: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
+  annotations:
+    glossary/term-cs: Číselná řada
+    glossary/term-en: Number series
+    glossary/term-ro: Serie numerică
+    glossary/term-it: Serie numerica
+    glossary/term-ua: Числова серія
+    glossary/term-pl: Seria numeryczna
+    glossary/en-gui: Number series
+    glossary/en-code: NumberSeries
+    glossary/obsolete: NumericalSeries
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: number-series--logistics
+  title: Number series
+  description: Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.
+  annotations:
+    glossary/term-cs: Číselná řada
+    glossary/term-en: Number series
+    glossary/term-ro: Serie numerică
+    glossary/term-it: Serie numerica
+    glossary/term-ua: Числова серія
+    glossary/term-pl: Seria numeryczna
+    glossary/en-gui: Number series
+    glossary/en-code: NumberSeries
+    glossary/obsolete: NumericalSeries
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: finance
+  title: Finance
+  annotations:
+    glossary/color: "#2563eb"
+    glossary/icon: "💰"
+spec:
+  owner: glossary-owners

@@ -1,17 +1,48 @@
-term_cs: Pobočka
-term_en: Store / Branch
-term_ro: Magazin / Filială
-term_it: Negozio / Filiale
-term_ua: Філія / Магазин
-term_pl: Oddział / Sklep
-
-definitions:
-  - context: logistics
-    meaning: Fyzická kamenná prodejna (store) kam se zasílají převodky se zbožím k prodeji zákazníkům.
-    en_gui: Store
-    en_code: Store
-  - context: finance
-    meaning: Organizační složka (Foreign branch) — právní/daňová entita v zahraničí.
-    en_gui: Foreign branch
-    en_code: ForeignBranch
-    obsolete: OrganizationUnit;OrganizationalUnit
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: store-branch--logistics
+  title: Store / Branch
+  description: Fyzická kamenná prodejna (store) kam se zasílají převodky se zbožím k prodeji zákazníkům.
+  annotations:
+    glossary/term-cs: Pobočka
+    glossary/term-en: Store / Branch
+    glossary/term-ro: Magazin / Filială
+    glossary/term-it: Negozio / Filiale
+    glossary/term-ua: Філія / Магазин
+    glossary/term-pl: Oddział / Sklep
+    glossary/en-gui: Store
+    glossary/en-code: Store
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: store-branch--finance
+  title: Store / Branch
+  description: Organizační složka (Foreign branch) — právní/daňová entita v zahraničí.
+  annotations:
+    glossary/term-cs: Pobočka
+    glossary/term-en: Store / Branch
+    glossary/term-ro: Magazin / Filială
+    glossary/term-it: Negozio / Filiale
+    glossary/term-ua: Філія / Магазин
+    glossary/term-pl: Oddział / Sklep
+    glossary/en-gui: Foreign branch
+    glossary/en-code: ForeignBranch
+    glossary/obsolete: OrganizationUnit;OrganizationalUnit
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

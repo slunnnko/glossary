@@ -1,20 +1,71 @@
-term_cs: Reklamace
-term_en: Complaint
-term_ro: Reclamație
-term_it: Reclamo
-term_ua: Рекламація
-term_pl: Reklamacja
-
-definitions:
-  - context: finance
-    meaning: Finanční reklamace — nárok na dobropis nebo opravu faktury řešený účetním oddělením.
-    en_gui: Financial claim
-    en_code: FinancialClaim
-  - context: logistics
-    meaning: Oddělení reklamací (Complaints) — fyzické zpracování vrácených produktů posouzení stavu zboží.
-    en_gui: Complaints
-    en_code: Complaints
-  - context: customer
-    meaning: Zákaznická reklamace — komunikace se zákazníkem ohledně vadného nebo poškozeného zboží řešení nároku.
-    en_gui: Customer complaint
-    en_code: CustomerComplaint
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: complaint--finance
+  title: Complaint
+  description: Finanční reklamace — nárok na dobropis nebo opravu faktury řešený účetním oddělením.
+  annotations:
+    glossary/term-cs: Reklamace
+    glossary/term-en: Complaint
+    glossary/term-ro: Reclamație
+    glossary/term-it: Reclamo
+    glossary/term-ua: Рекламація
+    glossary/term-pl: Reklamacja
+    glossary/en-gui: Financial claim
+    glossary/en-code: FinancialClaim
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: complaint--logistics
+  title: Complaint
+  description: Oddělení reklamací (Complaints) — fyzické zpracování vrácených produktů posouzení stavu zboží.
+  annotations:
+    glossary/term-cs: Reklamace
+    glossary/term-en: Complaint
+    glossary/term-ro: Reclamație
+    glossary/term-it: Reclamo
+    glossary/term-ua: Рекламація
+    glossary/term-pl: Reklamacja
+    glossary/en-gui: Complaints
+    glossary/en-code: Complaints
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: complaint--customer
+  title: Complaint
+  description: Zákaznická reklamace — komunikace se zákazníkem ohledně vadného nebo poškozeného zboží řešení nároku.
+  annotations:
+    glossary/term-cs: Reklamace
+    glossary/term-en: Complaint
+    glossary/term-ro: Reclamație
+    glossary/term-it: Reclamo
+    glossary/term-ua: Рекламація
+    glossary/term-pl: Reklamacja
+    glossary/en-gui: Customer complaint
+    glossary/en-code: CustomerComplaint
+    glossary/domain: "customer"
+  tags:
+    - vocabulary
+    - customer
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: customer

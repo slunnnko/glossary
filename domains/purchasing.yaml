@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: purchasing
+  title: Nákup
+  annotations:
+    glossary/color: "#d97706"
+    glossary/icon: "🛒"
+spec:
+  owner: glossary-owners

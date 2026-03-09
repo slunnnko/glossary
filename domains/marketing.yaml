@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: marketing
+  title: Marketing
+  annotations:
+    glossary/color: "#e11d48"
+    glossary/icon: "📣"
+spec:
+  owner: glossary-owners

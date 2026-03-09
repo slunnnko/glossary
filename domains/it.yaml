@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: it
+  title: IT / Development
+  annotations:
+    glossary/color: "#7c3aed"
+    glossary/icon: "💻"
+spec:
+  owner: glossary-owners

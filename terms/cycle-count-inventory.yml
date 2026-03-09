@@ -1,16 +1,47 @@
-term_cs: Inventura
-term_en: Cycle count / Inventory
-term_ro: Inventar
-term_it: Inventario
-term_ua: Інвентаризація
-term_pl: Inwentaryzacja
-
-definitions:
-  - context: logistics
-    meaning: Fyzická kontrola skutečného stavu zásob a porovnání se záznamy v systému (cycle count).
-    en_gui: Cycle count
-    en_code: CycleCount
-  - context: finance
-    meaning: Inventarizace — účetní proces ověření že stav majetku a závazků v účetnictví odpovídá skutečnosti.
-    en_gui: Inventory / Stocktaking
-    en_code: Inventory
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: cycle-count-inventory--logistics
+  title: Cycle count / Inventory
+  description: Fyzická kontrola skutečného stavu zásob a porovnání se záznamy v systému (cycle count).
+  annotations:
+    glossary/term-cs: Inventura
+    glossary/term-en: Cycle count / Inventory
+    glossary/term-ro: Inventar
+    glossary/term-it: Inventario
+    glossary/term-ua: Інвентаризація
+    glossary/term-pl: Inwentaryzacja
+    glossary/en-gui: Cycle count
+    glossary/en-code: CycleCount
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: cycle-count-inventory--finance
+  title: Cycle count / Inventory
+  description: Inventarizace — účetní proces ověření že stav majetku a závazků v účetnictví odpovídá skutečnosti.
+  annotations:
+    glossary/term-cs: Inventura
+    glossary/term-en: Cycle count / Inventory
+    glossary/term-ro: Inventar
+    glossary/term-it: Inventario
+    glossary/term-ua: Інвентаризація
+    glossary/term-pl: Inwentaryzacja
+    glossary/en-gui: Inventory / Stocktaking
+    glossary/en-code: Inventory
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

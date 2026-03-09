@@ -1,16 +1,47 @@
-term_cs: Stav
-term_en: Status
-term_ro: Stare
-term_it: Stato
-term_ua: Стан
-term_pl: Stan
-
-definitions:
-  - context: logistics
-    meaning: Status objednávky/zakázky v logistickém procesu — např. čeká na ohodnocení vychystává se balí se expeduje se.
-    en_gui: Status
-    en_code: Status
-  - context: finance
-    meaning: Stav dokladu — nezaúčtovaný zaúčtovaný stornovaný. Nebo stav pohledávky/závazku — otevřený uhrazený po splatnosti.
-    en_gui: Status / State
-    en_code: Status
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: status--logistics
+  title: Status
+  description: Status objednávky/zakázky v logistickém procesu — např. čeká na ohodnocení vychystává se balí se expeduje se.
+  annotations:
+    glossary/term-cs: Stav
+    glossary/term-en: Status
+    glossary/term-ro: Stare
+    glossary/term-it: Stato
+    glossary/term-ua: Стан
+    glossary/term-pl: Stan
+    glossary/en-gui: Status
+    glossary/en-code: Status
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: status--finance
+  title: Status
+  description: Stav dokladu — nezaúčtovaný zaúčtovaný stornovaný. Nebo stav pohledávky/závazku — otevřený uhrazený po splatnosti.
+  annotations:
+    glossary/term-cs: Stav
+    glossary/term-en: Status
+    glossary/term-ro: Stare
+    glossary/term-it: Stato
+    glossary/term-ua: Стан
+    glossary/term-pl: Stan
+    glossary/en-gui: Status / State
+    glossary/en-code: Status
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

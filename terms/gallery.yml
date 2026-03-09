@@ -1,16 +1,47 @@
-term_cs: Galerie
-term_en: Gallery
-term_ro: Galerie
-term_it: Galleria
-term_ua: Галерея
-term_pl: Galeria
-
-definitions:
-  - context: logistics
-    meaning: Skladová oblast s regály kde je zboží uloženo v boxech na policích a odkud se vychystává pro objednávky.
-    en_gui: Gallery
-    en_code: Gallery
-  - context: marketing
-    meaning: Fotogalerie produktů — sada obrázků produktu pro e-shop nebo marketingové materiály.
-    en_gui: Gallery
-    en_code: Gallery
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: gallery--logistics
+  title: Gallery
+  description: Skladová oblast s regály kde je zboží uloženo v boxech na policích a odkud se vychystává pro objednávky.
+  annotations:
+    glossary/term-cs: Galerie
+    glossary/term-en: Gallery
+    glossary/term-ro: Galerie
+    glossary/term-it: Galleria
+    glossary/term-ua: Галерея
+    glossary/term-pl: Galeria
+    glossary/en-gui: Gallery
+    glossary/en-code: Gallery
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: gallery--marketing
+  title: Gallery
+  description: Fotogalerie produktů — sada obrázků produktu pro e-shop nebo marketingové materiály.
+  annotations:
+    glossary/term-cs: Galerie
+    glossary/term-en: Gallery
+    glossary/term-ro: Galerie
+    glossary/term-it: Galleria
+    glossary/term-ua: Галерея
+    glossary/term-pl: Galeria
+    glossary/en-gui: Gallery
+    glossary/en-code: Gallery
+    glossary/domain: "marketing"
+  tags:
+    - vocabulary
+    - marketing
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: marketing

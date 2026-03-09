@@ -1,20 +1,71 @@
-term_cs: Směna
-term_en: Shift / Exchange
-term_ro: Schimb
-term_it: Turno / Cambio
-term_ua: Зміна
-term_pl: Zmiana
-
-definitions:
-  - context: logistics
-    meaning: Pracovní období ve skladu — ranní odpolední nebo noční směna s definovaným začátkem a koncem.
-    en_gui: Shift
-    en_code: Shift
-  - context: hr
-    meaning: Pracovní směna zaměstnance — součást rozvrhu práce evidovaná v docházkovém systému.
-    en_gui: Shift
-    en_code: Shift
-  - context: finance
-    meaning: Směna měn — výměna jedné měny za druhou dle kurzu (currency exchange).
-    en_gui: Exchange
-    en_code: CurrencyExchange
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: shift-exchange--logistics
+  title: Shift / Exchange
+  description: Pracovní období ve skladu — ranní odpolední nebo noční směna s definovaným začátkem a koncem.
+  annotations:
+    glossary/term-cs: Směna
+    glossary/term-en: Shift / Exchange
+    glossary/term-ro: Schimb
+    glossary/term-it: Turno / Cambio
+    glossary/term-ua: Зміна
+    glossary/term-pl: Zmiana
+    glossary/en-gui: Shift
+    glossary/en-code: Shift
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: shift-exchange--hr
+  title: Shift / Exchange
+  description: Pracovní směna zaměstnance — součást rozvrhu práce evidovaná v docházkovém systému.
+  annotations:
+    glossary/term-cs: Směna
+    glossary/term-en: Shift / Exchange
+    glossary/term-ro: Schimb
+    glossary/term-it: Turno / Cambio
+    glossary/term-ua: Зміна
+    glossary/term-pl: Zmiana
+    glossary/en-gui: Shift
+    glossary/en-code: Shift
+    glossary/domain: "hr"
+  tags:
+    - vocabulary
+    - hr
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: hr
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: shift-exchange--finance
+  title: Shift / Exchange
+  description: Směna měn — výměna jedné měny za druhou dle kurzu (currency exchange).
+  annotations:
+    glossary/term-cs: Směna
+    glossary/term-en: Shift / Exchange
+    glossary/term-ro: Schimb
+    glossary/term-it: Turno / Cambio
+    glossary/term-ua: Зміна
+    glossary/term-pl: Zmiana
+    glossary/en-gui: Exchange
+    glossary/en-code: CurrencyExchange
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

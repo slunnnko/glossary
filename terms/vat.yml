@@ -1,12 +1,23 @@
-term_cs: DPH
-term_en: VAT
-term_ro: TVA
-term_it: IVA
-term_ua: ПДВ
-term_pl: VAT
-
-definitions:
-  - context: finance
-    meaning: Daň z přidané hodnoty (VAT). Zahrnuje sazby DPH DPH plnění přiznání k DPH a související nastavení.
-    en_gui: VAT
-    en_code: Vat
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: vat--finance
+  title: VAT
+  description: Daň z přidané hodnoty (VAT). Zahrnuje sazby DPH DPH plnění přiznání k DPH a související nastavení.
+  annotations:
+    glossary/term-cs: DPH
+    glossary/term-en: VAT
+    glossary/term-ro: TVA
+    glossary/term-it: IVA
+    glossary/term-ua: ПДВ
+    glossary/term-pl: VAT
+    glossary/en-gui: VAT
+    glossary/en-code: Vat
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

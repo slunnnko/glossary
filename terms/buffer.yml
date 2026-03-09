@@ -1,16 +1,47 @@
-term_cs: Buffer
-term_en: Buffer
-term_ro: Stoc tampon
-term_it: Buffer
-term_ua: Буфер
-term_pl: Bufor
-
-definitions:
-  - context: logistics
-    meaning: Fyzický prostor ve skladu mezi vychystáváním a balením kde čekají boxy s nachystaným zbožím na zpracování.
-    en_gui: Buffer
-    en_code: Buffer
-  - context: it
-    meaning: Vyrovnávací paměť — dočasné úložiště dat mezi dvěma procesy s různou rychlostí zpracování.
-    en_gui: Buffer
-    en_code: Buffer
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buffer--logistics
+  title: Buffer
+  description: Fyzický prostor ve skladu mezi vychystáváním a balením kde čekají boxy s nachystaným zbožím na zpracování.
+  annotations:
+    glossary/term-cs: Buffer
+    glossary/term-en: Buffer
+    glossary/term-ro: Stoc tampon
+    glossary/term-it: Buffer
+    glossary/term-ua: Буфер
+    glossary/term-pl: Bufor
+    glossary/en-gui: Buffer
+    glossary/en-code: Buffer
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buffer--it
+  title: Buffer
+  description: Vyrovnávací paměť — dočasné úložiště dat mezi dvěma procesy s různou rychlostí zpracování.
+  annotations:
+    glossary/term-cs: Buffer
+    glossary/term-en: Buffer
+    glossary/term-ro: Stoc tampon
+    glossary/term-it: Buffer
+    glossary/term-ua: Буфер
+    glossary/term-pl: Bufor
+    glossary/en-gui: Buffer
+    glossary/en-code: Buffer
+    glossary/domain: "it"
+  tags:
+    - vocabulary
+    - it
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: it

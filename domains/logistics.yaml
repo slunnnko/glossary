@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: logistics
+  title: Logistika
+  annotations:
+    glossary/color: "#059669"
+    glossary/icon: "📦"
+spec:
+  owner: glossary-owners

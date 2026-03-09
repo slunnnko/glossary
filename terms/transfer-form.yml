@@ -1,16 +1,47 @@
-term_cs: Převodka
-term_en: Transfer form
-term_ro: Formular de transfer
-term_it: Modulo di trasferimento
-term_ua: Перевідний документ
-term_pl: Dokument transferowy
-
-definitions:
-  - context: finance
-    meaning: Účetní doklad pro zaznamenání přesunu majetku nebo hodnot mezi účty entitami nebo středisky v rámci jedné společnosti.
-    en_gui: Transfer document
-    en_code: TransferDocument
-  - context: logistics
-    meaning: "Doklad/zakázka pro fyzický přesun zboží mezi sklady nebo na pobočku. Typy: převodka do sáčku (osobní odběr), převodka do boxu (zásobení pobočky), převodka přímý prodej."
-    en_gui: Transfer form
-    en_code: TransferForm
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: transfer-form--finance
+  title: Transfer form
+  description: Účetní doklad pro zaznamenání přesunu majetku nebo hodnot mezi účty entitami nebo středisky v rámci jedné společnosti.
+  annotations:
+    glossary/term-cs: Převodka
+    glossary/term-en: Transfer form
+    glossary/term-ro: Formular de transfer
+    glossary/term-it: Modulo di trasferimento
+    glossary/term-ua: Перевідний документ
+    glossary/term-pl: Dokument transferowy
+    glossary/en-gui: Transfer document
+    glossary/en-code: TransferDocument
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: transfer-form--logistics
+  title: Transfer form
+  description: "Doklad/zakázka pro fyzický přesun zboží mezi sklady nebo na pobočku. Typy: převodka do sáčku (osobní odběr), převodka do boxu (zásobení pobočky), převodka přímý prodej."
+  annotations:
+    glossary/term-cs: Převodka
+    glossary/term-en: Transfer form
+    glossary/term-ro: Formular de transfer
+    glossary/term-it: Modulo di trasferimento
+    glossary/term-ua: Перевідний документ
+    glossary/term-pl: Dokument transferowy
+    glossary/en-gui: Transfer form
+    glossary/en-code: TransferForm
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

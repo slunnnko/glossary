@@ -1,13 +1,24 @@
-term_cs: Párovací znak
-term_en: Pairing code
-term_ro: Cod de asociere
-term_it: Codice di abbinamento
-term_ua: Код парування
-term_pl: Kod parowania
-
-definitions:
-  - context: finance
-    meaning: Kód pro párování otevřených položek na účtech — variabilní symbol nebo interní identifikátor pro spárování platby s fakturou.
-    en_gui: Pairing code
-    en_code: PairingCode
-    obsolete: PairingSymbol;PairSign;PairingSign
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: pairing-code--finance
+  title: Pairing code
+  description: Kód pro párování otevřených položek na účtech — variabilní symbol nebo interní identifikátor pro spárování platby s fakturou.
+  annotations:
+    glossary/term-cs: Párovací znak
+    glossary/term-en: Pairing code
+    glossary/term-ro: Cod de asociere
+    glossary/term-it: Codice di abbinamento
+    glossary/term-ua: Код парування
+    glossary/term-pl: Kod parowania
+    glossary/en-gui: Pairing code
+    glossary/en-code: PairingCode
+    glossary/obsolete: PairingSymbol;PairSign;PairingSign
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

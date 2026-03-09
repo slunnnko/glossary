@@ -1,20 +1,71 @@
-term_cs: Vratka
-term_en: Return
-term_ro: Retur
-term_it: Reso
-term_ua: Повернення
-term_pl: Zwrot
-
-definitions:
-  - context: finance
-    meaning: Dobropis nebo refundace — finanční vrácení peněz zákazníkovi za reklamované nebo vrácené zboží.
-    en_gui: Credit note / Refund
-    en_code: CreditNote
-  - context: logistics
-    meaning: Zásilka která nebyla doručena zákazníkovi a vrací se zpět do skladu k fyzickému zpracování.
-    en_gui: Return
-    en_code: Return
-  - context: customer
-    meaning: Proces vrácení zboží zákazníkem — zahrnuje komunikaci schválení a sledování stavu vrácení.
-    en_gui: Return (process)
-    en_code: ReturnProcess
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: return--finance
+  title: Return
+  description: Dobropis nebo refundace — finanční vrácení peněz zákazníkovi za reklamované nebo vrácené zboží.
+  annotations:
+    glossary/term-cs: Vratka
+    glossary/term-en: Return
+    glossary/term-ro: Retur
+    glossary/term-it: Reso
+    glossary/term-ua: Повернення
+    glossary/term-pl: Zwrot
+    glossary/en-gui: Credit note / Refund
+    glossary/en-code: CreditNote
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: return--logistics
+  title: Return
+  description: Zásilka která nebyla doručena zákazníkovi a vrací se zpět do skladu k fyzickému zpracování.
+  annotations:
+    glossary/term-cs: Vratka
+    glossary/term-en: Return
+    glossary/term-ro: Retur
+    glossary/term-it: Reso
+    glossary/term-ua: Повернення
+    glossary/term-pl: Zwrot
+    glossary/en-gui: Return
+    glossary/en-code: Return
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: return--customer
+  title: Return
+  description: Proces vrácení zboží zákazníkem — zahrnuje komunikaci schválení a sledování stavu vrácení.
+  annotations:
+    glossary/term-cs: Vratka
+    glossary/term-en: Return
+    glossary/term-ro: Retur
+    glossary/term-it: Reso
+    glossary/term-ua: Повернення
+    glossary/term-pl: Zwrot
+    glossary/en-gui: Return (process)
+    glossary/en-code: ReturnProcess
+    glossary/domain: "customer"
+  tags:
+    - vocabulary
+    - customer
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: customer

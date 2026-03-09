@@ -1,12 +1,23 @@
-term_cs: Etiketa
-term_en: Label
-term_ro: Etichetă
-term_it: Etichetta
-term_ua: Етикетка
-term_pl: Etykieta
-
-definitions:
-  - context: logistics
-    meaning: Samolepicí papír s čárovým kódem EAN kódem nebo AWB číslem nalepený na balík nebo produkt pro identifikaci.
-    en_gui: Label
-    en_code: Label
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: label--logistics
+  title: Label
+  description: Samolepicí papír s čárovým kódem EAN kódem nebo AWB číslem nalepený na balík nebo produkt pro identifikaci.
+  annotations:
+    glossary/term-cs: Etiketa
+    glossary/term-en: Label
+    glossary/term-ro: Etichetă
+    glossary/term-it: Etichetta
+    glossary/term-ua: Етикетка
+    glossary/term-pl: Etykieta
+    glossary/en-gui: Label
+    glossary/en-code: Label
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

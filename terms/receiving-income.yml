@@ -1,20 +1,71 @@
-term_cs: Příjem
-term_en: Receiving / Income
-term_ro: Recepție / Venit
-term_it: Ricezione / Reddito
-term_ua: Прийом / Дохід
-term_pl: Przyjęcie / Dochód
-
-definitions:
-  - context: finance
-    meaning: Příjem ve smyslu výnosu nebo cash-flow — peněžní tok směrem do firmy.
-    en_gui: Income / Revenue
-    en_code: Revenue
-  - context: logistics
-    meaning: Oddělení nebo proces příjmu zboží ve skladu — kontrola zaevidování a naskladnění dodaného zboží od dodavatele.
-    en_gui: Receiving
-    en_code: Receiving
-  - context: hr
-    meaning: Příjem zaměstnance — mzda nebo celková kompenzace.
-    en_gui: Salary / Income
-    en_code: Salary
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: receiving-income--finance
+  title: Receiving / Income
+  description: Příjem ve smyslu výnosu nebo cash-flow — peněžní tok směrem do firmy.
+  annotations:
+    glossary/term-cs: Příjem
+    glossary/term-en: Receiving / Income
+    glossary/term-ro: Recepție / Venit
+    glossary/term-it: Ricezione / Reddito
+    glossary/term-ua: Прийом / Дохід
+    glossary/term-pl: Przyjęcie / Dochód
+    glossary/en-gui: Income / Revenue
+    glossary/en-code: Revenue
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: receiving-income--logistics
+  title: Receiving / Income
+  description: Oddělení nebo proces příjmu zboží ve skladu — kontrola zaevidování a naskladnění dodaného zboží od dodavatele.
+  annotations:
+    glossary/term-cs: Příjem
+    glossary/term-en: Receiving / Income
+    glossary/term-ro: Recepție / Venit
+    glossary/term-it: Ricezione / Reddito
+    glossary/term-ua: Прийом / Дохід
+    glossary/term-pl: Przyjęcie / Dochód
+    glossary/en-gui: Receiving
+    glossary/en-code: Receiving
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: receiving-income--hr
+  title: Receiving / Income
+  description: Příjem zaměstnance — mzda nebo celková kompenzace.
+  annotations:
+    glossary/term-cs: Příjem
+    glossary/term-en: Receiving / Income
+    glossary/term-ro: Recepție / Venit
+    glossary/term-it: Ricezione / Reddito
+    glossary/term-ua: Прийом / Дохід
+    glossary/term-pl: Przyjęcie / Dochód
+    glossary/en-gui: Salary / Income
+    glossary/en-code: Salary
+    glossary/domain: "hr"
+  tags:
+    - vocabulary
+    - hr
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: hr

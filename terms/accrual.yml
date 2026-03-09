@@ -1,13 +1,24 @@
-term_cs: Dohad
-term_en: Accrual
-term_ro: Angajament
-term_it: Rateo
-term_ua: Нарахування
-term_pl: Rozliczenie
-
-definitions:
-  - context: finance
-    meaning: Účetní odhad — dohadná položka pro zaúčtování nákladů nebo výnosů u kterých dosud nebyl doručen doklad.
-    en_gui: Accrual
-    en_code: Accrual
-    obsolete: Estimation
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: accrual--finance
+  title: Accrual
+  description: Účetní odhad — dohadná položka pro zaúčtování nákladů nebo výnosů u kterých dosud nebyl doručen doklad.
+  annotations:
+    glossary/term-cs: Dohad
+    glossary/term-en: Accrual
+    glossary/term-ro: Angajament
+    glossary/term-it: Rateo
+    glossary/term-ua: Нарахування
+    glossary/term-pl: Rozliczenie
+    glossary/en-gui: Accrual
+    glossary/en-code: Accrual
+    glossary/obsolete: Estimation
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

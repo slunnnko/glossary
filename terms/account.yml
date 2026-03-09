@@ -1,13 +1,24 @@
-term_cs: Konto
-term_en: Account
-term_ro: Cont
-term_it: Conto
-term_ua: Рахунок
-term_pl: Konto
-
-definitions:
-  - context: finance
-    meaning: Účet v účtové osnově — syntetický nebo analytický účet pro zaúčtování pohybů.
-    en_gui: Account
-    en_code: Account
-    obsolete: ChartOfAccounts
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: account--finance
+  title: Account
+  description: Účet v účtové osnově — syntetický nebo analytický účet pro zaúčtování pohybů.
+  annotations:
+    glossary/term-cs: Konto
+    glossary/term-en: Account
+    glossary/term-ro: Cont
+    glossary/term-it: Conto
+    glossary/term-ua: Рахунок
+    glossary/term-pl: Konto
+    glossary/en-gui: Account
+    glossary/en-code: Account
+    glossary/obsolete: ChartOfAccounts
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

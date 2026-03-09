@@ -1,13 +1,24 @@
-term_cs: Předkontace
-term_en: Account assignment
-term_ro: Atribuire cont
-term_it: Assegnazione conto
-term_ua: Призначення рахунку
-term_pl: Przypisanie konta
-
-definitions:
-  - context: finance
-    meaning: Přiřazení účetního předpisu k dokladu — určuje na jaké účty se má doklad zaúčtovat.
-    en_gui: Account assignment
-    en_code: AccountAssignment
-    obsolete: Precontation
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: account-assignment--finance
+  title: Account assignment
+  description: Přiřazení účetního předpisu k dokladu — určuje na jaké účty se má doklad zaúčtovat.
+  annotations:
+    glossary/term-cs: Předkontace
+    glossary/term-en: Account assignment
+    glossary/term-ro: Atribuire cont
+    glossary/term-it: Assegnazione conto
+    glossary/term-ua: Призначення рахунку
+    glossary/term-pl: Przypisanie konta
+    glossary/en-gui: Account assignment
+    glossary/en-code: AccountAssignment
+    glossary/obsolete: Precontation
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

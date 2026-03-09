@@ -1,16 +1,47 @@
-term_cs: Doklad
-term_en: Document
-term_ro: Document
-term_it: Fattura
-term_ua: Документ
-term_pl: Dokument finansowy
-
-definitions:
-  - context: finance
-    meaning: Finanční doklad — faktura dobropis výdejka nebo jiný účetní záznam sloužící jako podklad pro zaúčtování.
-    en_gui: Document (financial)
-    en_code: Document
-  - context: logistics
-    meaning: Finanční dokument typu faktura nebo výdejka zboží v logistickém kontextu odlišován od obecného dokumentu (PDF Word apod.).
-    en_gui: Document
-    en_code: Document
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: document--finance
+  title: Document
+  description: Finanční doklad — faktura dobropis výdejka nebo jiný účetní záznam sloužící jako podklad pro zaúčtování.
+  annotations:
+    glossary/term-cs: Doklad
+    glossary/term-en: Document
+    glossary/term-ro: Document
+    glossary/term-it: Fattura
+    glossary/term-ua: Документ
+    glossary/term-pl: Dokument finansowy
+    glossary/en-gui: Document (financial)
+    glossary/en-code: Document
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: document--logistics
+  title: Document
+  description: Finanční dokument typu faktura nebo výdejka zboží v logistickém kontextu odlišován od obecného dokumentu (PDF Word apod.).
+  annotations:
+    glossary/term-cs: Doklad
+    glossary/term-en: Document
+    glossary/term-ro: Document
+    glossary/term-it: Fattura
+    glossary/term-ua: Документ
+    glossary/term-pl: Dokument finansowy
+    glossary/en-gui: Document
+    glossary/en-code: Document
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

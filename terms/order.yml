@@ -1,20 +1,71 @@
-term_cs: Objednávka
-term_en: Order
-term_ro: Comandă
-term_it: Ordine
-term_ua: Замовлення
-term_pl: Zamówienie
-
-definitions:
-  - context: purchasing
-    meaning: Nákupní objednávka (Purchase Order) — objednávka vystavená dodavateli na dodání zboží nebo služeb.
-    en_gui: Purchase order
-    en_code: PurchaseOrder
-  - context: logistics
-    meaning: Zákaznická objednávka — záznam o nákupu zákazníka který prochází logistickým procesem (vychystání balení expedice).
-    en_gui: Order
-    en_code: Order
-  - context: customer
-    meaning: Objednávka z pohledu zákazníka — sledování stavu úpravy storna.
-    en_gui: Customer order
-    en_code: CustomerOrder
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order--purchasing
+  title: Order
+  description: Nákupní objednávka (Purchase Order) — objednávka vystavená dodavateli na dodání zboží nebo služeb.
+  annotations:
+    glossary/term-cs: Objednávka
+    glossary/term-en: Order
+    glossary/term-ro: Comandă
+    glossary/term-it: Ordine
+    glossary/term-ua: Замовлення
+    glossary/term-pl: Zamówienie
+    glossary/en-gui: Purchase order
+    glossary/en-code: PurchaseOrder
+    glossary/domain: "purchasing"
+  tags:
+    - vocabulary
+    - purchasing
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: purchasing
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order--logistics
+  title: Order
+  description: Zákaznická objednávka — záznam o nákupu zákazníka který prochází logistickým procesem (vychystání balení expedice).
+  annotations:
+    glossary/term-cs: Objednávka
+    glossary/term-en: Order
+    glossary/term-ro: Comandă
+    glossary/term-it: Ordine
+    glossary/term-ua: Замовлення
+    glossary/term-pl: Zamówienie
+    glossary/en-gui: Order
+    glossary/en-code: Order
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: order--customer
+  title: Order
+  description: Objednávka z pohledu zákazníka — sledování stavu úpravy storna.
+  annotations:
+    glossary/term-cs: Objednávka
+    glossary/term-en: Order
+    glossary/term-ro: Comandă
+    glossary/term-it: Ordine
+    glossary/term-ua: Замовлення
+    glossary/term-pl: Zamówienie
+    glossary/en-gui: Customer order
+    glossary/en-code: CustomerOrder
+    glossary/domain: "customer"
+  tags:
+    - vocabulary
+    - customer
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: customer

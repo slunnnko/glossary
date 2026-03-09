@@ -1,0 +1,789 @@
+{
+  "_generated": "2026-03-09T14:51:55.116Z",
+  "_source": "domains/*.yaml + terms/*.yml (Backstage catalog format)",
+  "contexts": {
+    "customer": {
+      "label": "Zákaznický servis",
+      "color": "#dc2626",
+      "icon": "🎧"
+    },
+    "finance": {
+      "label": "Finance",
+      "color": "#2563eb",
+      "icon": "💰"
+    },
+    "hr": {
+      "label": "HR",
+      "color": "#0891b2",
+      "icon": "👥"
+    },
+    "it": {
+      "label": "IT / Development",
+      "color": "#7c3aed",
+      "icon": "💻"
+    },
+    "logistics": {
+      "label": "Logistika",
+      "color": "#059669",
+      "icon": "📦"
+    },
+    "marketing": {
+      "label": "Marketing",
+      "color": "#e11d48",
+      "icon": "📣"
+    },
+    "purchasing": {
+      "label": "Nákup",
+      "color": "#d97706",
+      "icon": "🛒"
+    }
+  },
+  "languages": {
+    "cs": {
+      "label": "CZ",
+      "full": "Čeština"
+    },
+    "en": {
+      "label": "EN",
+      "full": "English"
+    },
+    "ro": {
+      "label": "RO",
+      "full": "Română"
+    },
+    "it": {
+      "label": "IT",
+      "full": "Italiano"
+    },
+    "ua": {
+      "label": "UA",
+      "full": "Українська"
+    },
+    "pl": {
+      "label": "PL",
+      "full": "Polski"
+    }
+  },
+  "terms": [
+    {
+      "slug": "buffer",
+      "term": "Buffer",
+      "translations": {
+        "cs": "Buffer",
+        "en": "Buffer",
+        "ro": "Stoc tampon",
+        "it": "Buffer",
+        "ua": "Буфер",
+        "pl": "Bufor"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Fyzický prostor ve skladu mezi vychystáváním a balením kde čekají boxy s nachystaným zbožím na zpracování.",
+          "en": "Buffer",
+          "enCode": "Buffer"
+        },
+        {
+          "context": "it",
+          "meaning": "Vyrovnávací paměť — dočasné úložiště dat mezi dvěma procesy s různou rychlostí zpracování.",
+          "en": "Buffer",
+          "enCode": "Buffer"
+        }
+      ]
+    },
+    {
+      "slug": "number-series",
+      "term": "Číselná řada",
+      "translations": {
+        "cs": "Číselná řada",
+        "en": "Number series",
+        "ro": "Serie numerică",
+        "it": "Serie numerica",
+        "ua": "Числова серія",
+        "pl": "Seria numeryczna"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.",
+          "en": "Number series",
+          "enCode": "NumberSeries",
+          "obsolete": [
+            "NumericalSeries"
+          ]
+        },
+        {
+          "context": "logistics",
+          "meaning": "Sekvence čísel přidělovaná dokladům (fakturám objednávkám) pro jednoznačnou identifikaci a auditní stopu.",
+          "en": "Number series",
+          "enCode": "NumberSeries",
+          "obsolete": [
+            "NumericalSeries"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "supplier",
+      "term": "Dodavatel",
+      "translations": {
+        "cs": "Dodavatel",
+        "en": "Supplier",
+        "ro": "Furnizor",
+        "it": "Fornitore",
+        "ua": "Постачальник",
+        "pl": "Dostawca"
+      },
+      "definitions": [
+        {
+          "context": "purchasing",
+          "meaning": "Obchodní partner od kterého firma nakupuje zboží. V nákupním procesu se řeší výběr zalistování a správa dodavatelů.",
+          "en": "Supplier / Vendor",
+          "enCode": "Supplier"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Dodavatel v kontextu příjmu zboží — identifikace od koho přišla dodávka párování s objednávkou.",
+          "en": "Supplier",
+          "enCode": "Supplier"
+        },
+        {
+          "context": "finance",
+          "meaning": "Dodavatel jako účetní entita — subjekt vůči kterému existují závazky (faktury k úhradě).",
+          "en": "Vendor",
+          "enCode": "Vendor"
+        }
+      ]
+    },
+    {
+      "slug": "accrual",
+      "term": "Dohad",
+      "translations": {
+        "cs": "Dohad",
+        "en": "Accrual",
+        "ro": "Angajament",
+        "it": "Rateo",
+        "ua": "Нарахування",
+        "pl": "Rozliczenie"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Účetní odhad — dohadná položka pro zaúčtování nákladů nebo výnosů u kterých dosud nebyl doručen doklad.",
+          "en": "Accrual",
+          "enCode": "Accrual",
+          "obsolete": [
+            "Estimation"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "document",
+      "term": "Doklad",
+      "translations": {
+        "cs": "Doklad",
+        "en": "Document",
+        "ro": "Document",
+        "it": "Fattura",
+        "ua": "Документ",
+        "pl": "Dokument finansowy"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Finanční doklad — faktura dobropis výdejka nebo jiný účetní záznam sloužící jako podklad pro zaúčtování.",
+          "en": "Document (financial)",
+          "enCode": "Document"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Finanční dokument typu faktura nebo výdejka zboží v logistickém kontextu odlišován od obecného dokumentu (PDF Word apod.).",
+          "en": "Document",
+          "enCode": "Document"
+        }
+      ]
+    },
+    {
+      "slug": "vat",
+      "term": "DPH",
+      "translations": {
+        "cs": "DPH",
+        "en": "VAT",
+        "ro": "TVA",
+        "it": "IVA",
+        "ua": "ПДВ",
+        "pl": "VAT"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Daň z přidané hodnoty (VAT). Zahrnuje sazby DPH DPH plnění přiznání k DPH a související nastavení.",
+          "en": "VAT",
+          "enCode": "Vat"
+        }
+      ]
+    },
+    {
+      "slug": "label",
+      "term": "Etiketa",
+      "translations": {
+        "cs": "Etiketa",
+        "en": "Label",
+        "ro": "Etichetă",
+        "it": "Etichetta",
+        "ua": "Етикетка",
+        "pl": "Etykieta"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Samolepicí papír s čárovým kódem EAN kódem nebo AWB číslem nalepený na balík nebo produkt pro identifikaci.",
+          "en": "Label",
+          "enCode": "Label"
+        }
+      ]
+    },
+    {
+      "slug": "invoice",
+      "term": "Faktura",
+      "translations": {
+        "cs": "Faktura",
+        "en": "Invoice",
+        "ro": "Factură",
+        "it": "Fattura",
+        "ua": "Рахунок-фактура",
+        "pl": "Faktura"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Daňový doklad vystavený za dodané zboží nebo služby. Obsahuje DPH částky splatnost.",
+          "en": "Invoice",
+          "enCode": "Invoice"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Faktura v kontextu logistiky — generována automaticky po expedici objednávky (proces fakturace).",
+          "en": "Invoice",
+          "enCode": "Invoice"
+        }
+      ]
+    },
+    {
+      "slug": "gallery",
+      "term": "Galerie",
+      "translations": {
+        "cs": "Galerie",
+        "en": "Gallery",
+        "ro": "Galerie",
+        "it": "Galleria",
+        "ua": "Галерея",
+        "pl": "Galeria"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Skladová oblast s regály kde je zboží uloženo v boxech na policích a odkud se vychystává pro objednávky.",
+          "en": "Gallery",
+          "enCode": "Gallery"
+        },
+        {
+          "context": "marketing",
+          "meaning": "Fotogalerie produktů — sada obrázků produktu pro e-shop nebo marketingové materiály.",
+          "en": "Gallery",
+          "enCode": "Gallery"
+        }
+      ]
+    },
+    {
+      "slug": "cycle-count-inventory",
+      "term": "Inventura",
+      "translations": {
+        "cs": "Inventura",
+        "en": "Cycle count / Inventory",
+        "ro": "Inventar",
+        "it": "Inventario",
+        "ua": "Інвентаризація",
+        "pl": "Inwentaryzacja"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Fyzická kontrola skutečného stavu zásob a porovnání se záznamy v systému (cycle count).",
+          "en": "Cycle count",
+          "enCode": "CycleCount"
+        },
+        {
+          "context": "finance",
+          "meaning": "Inventarizace — účetní proces ověření že stav majetku a závazků v účetnictví odpovídá skutečnosti.",
+          "en": "Inventory / Stocktaking",
+          "enCode": "Inventory"
+        }
+      ]
+    },
+    {
+      "slug": "account",
+      "term": "Konto",
+      "translations": {
+        "cs": "Konto",
+        "en": "Account",
+        "ro": "Cont",
+        "it": "Conto",
+        "ua": "Рахунок",
+        "pl": "Konto"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Účet v účtové osnově — syntetický nebo analytický účet pro zaúčtování pohybů.",
+          "en": "Account",
+          "enCode": "Account",
+          "obsolete": [
+            "ChartOfAccounts"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "order",
+      "term": "Objednávka",
+      "translations": {
+        "cs": "Objednávka",
+        "en": "Order",
+        "ro": "Comandă",
+        "it": "Ordine",
+        "ua": "Замовлення",
+        "pl": "Zamówienie"
+      },
+      "definitions": [
+        {
+          "context": "purchasing",
+          "meaning": "Nákupní objednávka (Purchase Order) — objednávka vystavená dodavateli na dodání zboží nebo služeb.",
+          "en": "Purchase order",
+          "enCode": "PurchaseOrder"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Zákaznická objednávka — záznam o nákupu zákazníka který prochází logistickým procesem (vychystání balení expedice).",
+          "en": "Order",
+          "enCode": "Order"
+        },
+        {
+          "context": "customer",
+          "meaning": "Objednávka z pohledu zákazníka — sledování stavu úpravy storna.",
+          "en": "Customer order",
+          "enCode": "CustomerOrder"
+        }
+      ]
+    },
+    {
+      "slug": "pairing-code",
+      "term": "Párovací znak",
+      "translations": {
+        "cs": "Párovací znak",
+        "en": "Pairing code",
+        "ro": "Cod de asociere",
+        "it": "Codice di abbinamento",
+        "ua": "Код парування",
+        "pl": "Kod parowania"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Kód pro párování otevřených položek na účtech — variabilní symbol nebo interní identifikátor pro spárování platby s fakturou.",
+          "en": "Pairing code",
+          "enCode": "PairingCode",
+          "obsolete": [
+            "PairingSymbol",
+            "PairSign",
+            "PairingSign"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "store-branch",
+      "term": "Pobočka",
+      "translations": {
+        "cs": "Pobočka",
+        "en": "Store / Branch",
+        "ro": "Magazin / Filială",
+        "it": "Negozio / Filiale",
+        "ua": "Філія / Магазин",
+        "pl": "Oddział / Sklep"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Fyzická kamenná prodejna (store) kam se zasílají převodky se zbožím k prodeji zákazníkům.",
+          "en": "Store",
+          "enCode": "Store"
+        },
+        {
+          "context": "finance",
+          "meaning": "Organizační složka (Foreign branch) — právní/daňová entita v zahraničí.",
+          "en": "Foreign branch",
+          "enCode": "ForeignBranch",
+          "obsolete": [
+            "OrganizationUnit",
+            "OrganizationalUnit"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "item",
+      "term": "Položka",
+      "translations": {
+        "cs": "Položka",
+        "en": "Item",
+        "ro": "Articol",
+        "it": "Articolo",
+        "ua": "Позиція",
+        "pl": "Pozycja"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Řádek dokladu — jednotlivý záznam na faktuře nebo účetním dokladu s částkou sazbou DPH a předkontací.",
+          "en": "Item / Line item",
+          "enCode": "DocumentItem"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Položka příjmu (receiving item) — konkrétní produkt přijatý na sklad v rámci dodávky.",
+          "en": "Receiving item",
+          "enCode": "ReceivingItem"
+        }
+      ]
+    },
+    {
+      "slug": "account-assignment",
+      "term": "Předkontace",
+      "translations": {
+        "cs": "Předkontace",
+        "en": "Account assignment",
+        "ro": "Atribuire cont",
+        "it": "Assegnazione conto",
+        "ua": "Призначення рахунку",
+        "pl": "Przypisanie konta"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Přiřazení účetního předpisu k dokladu — určuje na jaké účty se má doklad zaúčtovat.",
+          "en": "Account assignment",
+          "enCode": "AccountAssignment",
+          "obsolete": [
+            "Precontation"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "transfer-form",
+      "term": "Převodka",
+      "translations": {
+        "cs": "Převodka",
+        "en": "Transfer form",
+        "ro": "Formular de transfer",
+        "it": "Modulo di trasferimento",
+        "ua": "Перевідний документ",
+        "pl": "Dokument transferowy"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Účetní doklad pro zaznamenání přesunu majetku nebo hodnot mezi účty entitami nebo středisky v rámci jedné společnosti.",
+          "en": "Transfer document",
+          "enCode": "TransferDocument"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Doklad/zakázka pro fyzický přesun zboží mezi sklady nebo na pobočku. Typy: převodka do sáčku (osobní odběr), převodka do boxu (zásobení pobočky), převodka přímý prodej.",
+          "en": "Transfer form",
+          "enCode": "TransferForm"
+        }
+      ]
+    },
+    {
+      "slug": "receiving-income",
+      "term": "Příjem",
+      "translations": {
+        "cs": "Příjem",
+        "en": "Receiving / Income",
+        "ro": "Recepție / Venit",
+        "it": "Ricezione / Reddito",
+        "ua": "Прийом / Дохід",
+        "pl": "Przyjęcie / Dochód"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Příjem ve smyslu výnosu nebo cash-flow — peněžní tok směrem do firmy.",
+          "en": "Income / Revenue",
+          "enCode": "Revenue"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Oddělení nebo proces příjmu zboží ve skladu — kontrola zaevidování a naskladnění dodaného zboží od dodavatele.",
+          "en": "Receiving",
+          "enCode": "Receiving"
+        },
+        {
+          "context": "hr",
+          "meaning": "Příjem zaměstnance — mzda nebo celková kompenzace.",
+          "en": "Salary / Income",
+          "enCode": "Salary"
+        }
+      ]
+    },
+    {
+      "slug": "complaint",
+      "term": "Reklamace",
+      "translations": {
+        "cs": "Reklamace",
+        "en": "Complaint",
+        "ro": "Reclamație",
+        "it": "Reclamo",
+        "ua": "Рекламація",
+        "pl": "Reklamacja"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Finanční reklamace — nárok na dobropis nebo opravu faktury řešený účetním oddělením.",
+          "en": "Financial claim",
+          "enCode": "FinancialClaim"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Oddělení reklamací (Complaints) — fyzické zpracování vrácených produktů posouzení stavu zboží.",
+          "en": "Complaints",
+          "enCode": "Complaints"
+        },
+        {
+          "context": "customer",
+          "meaning": "Zákaznická reklamace — komunikace se zákazníkem ohledně vadného nebo poškozeného zboží řešení nároku.",
+          "en": "Customer complaint",
+          "enCode": "CustomerComplaint"
+        }
+      ]
+    },
+    {
+      "slug": "warehouse",
+      "term": "Sklad",
+      "translations": {
+        "cs": "Sklad",
+        "en": "Warehouse",
+        "ro": "Depozit",
+        "it": "Magazzino",
+        "ua": "Склад",
+        "pl": "Magazyn"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Účetní sklad (Accounting stock) — logická evidence zásob pro účetní účely. Zachycuje hodnotu a pohyb zásob v účetních knihách.",
+          "en": "Accounting stock",
+          "enCode": "AccountingStock",
+          "obsolete": [
+            "Stock",
+            "StockBook",
+            "Warehouse"
+          ]
+        },
+        {
+          "context": "finance",
+          "meaning": "Fyzický sklad (Physical warehouse) — evidence fyzické lokace zásob bez vazby na účetní hodnotu.",
+          "en": "Physical warehouse",
+          "enCode": "PhysicalWarehouse",
+          "obsolete": [
+            "PhysicalStock"
+          ]
+        },
+        {
+          "context": "logistics",
+          "meaning": "Budova nebo část budovy určená pro logistické operace — příjem skladování vychystávání balení a expedice zboží.",
+          "en": "Warehouse / Stock",
+          "enCode": "Warehouse"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Oddělení skladu — konkrétní funkční část skladu s určeným účelem (příjem expedice galerie atd.).",
+          "en": "Department",
+          "enCode": "Department"
+        }
+      ]
+    },
+    {
+      "slug": "shift-exchange",
+      "term": "Směna",
+      "translations": {
+        "cs": "Směna",
+        "en": "Shift / Exchange",
+        "ro": "Schimb",
+        "it": "Turno / Cambio",
+        "ua": "Зміна",
+        "pl": "Zmiana"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Pracovní období ve skladu — ranní odpolední nebo noční směna s definovaným začátkem a koncem.",
+          "en": "Shift",
+          "enCode": "Shift"
+        },
+        {
+          "context": "hr",
+          "meaning": "Pracovní směna zaměstnance — součást rozvrhu práce evidovaná v docházkovém systému.",
+          "en": "Shift",
+          "enCode": "Shift"
+        },
+        {
+          "context": "finance",
+          "meaning": "Směna měn — výměna jedné měny za druhou dle kurzu (currency exchange).",
+          "en": "Exchange",
+          "enCode": "CurrencyExchange"
+        }
+      ]
+    },
+    {
+      "slug": "status",
+      "term": "Stav",
+      "translations": {
+        "cs": "Stav",
+        "en": "Status",
+        "ro": "Stare",
+        "it": "Stato",
+        "ua": "Стан",
+        "pl": "Stan"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Status objednávky/zakázky v logistickém procesu — např. čeká na ohodnocení vychystává se balí se expeduje se.",
+          "en": "Status",
+          "enCode": "Status"
+        },
+        {
+          "context": "finance",
+          "meaning": "Stav dokladu — nezaúčtovaný zaúčtovaný stornovaný. Nebo stav pohledávky/závazku — otevřený uhrazený po splatnosti.",
+          "en": "Status / State",
+          "enCode": "Status"
+        }
+      ]
+    },
+    {
+      "slug": "return",
+      "term": "Vratka",
+      "translations": {
+        "cs": "Vratka",
+        "en": "Return",
+        "ro": "Retur",
+        "it": "Reso",
+        "ua": "Повернення",
+        "pl": "Zwrot"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Dobropis nebo refundace — finanční vrácení peněz zákazníkovi za reklamované nebo vrácené zboží.",
+          "en": "Credit note / Refund",
+          "enCode": "CreditNote"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Zásilka která nebyla doručena zákazníkovi a vrací se zpět do skladu k fyzickému zpracování.",
+          "en": "Return",
+          "enCode": "Return"
+        },
+        {
+          "context": "customer",
+          "meaning": "Proces vrácení zboží zákazníkem — zahrnuje komunikaci schválení a sledování stavu vrácení.",
+          "en": "Return (process)",
+          "enCode": "ReturnProcess"
+        }
+      ]
+    },
+    {
+      "slug": "material-issue-slip",
+      "term": "Výdejka",
+      "translations": {
+        "cs": "Výdejka",
+        "en": "Material issue slip",
+        "ro": "Bon de ieșire",
+        "it": "Bolla di uscita",
+        "ua": "Видатковий документ",
+        "pl": "Wydanie"
+      },
+      "definitions": [
+        {
+          "context": "finance",
+          "meaning": "Účetní doklad o výdeji materiálu nebo zboží ze skladu slouží jako podklad pro zaúčtování úbytku zásob.",
+          "en": "Material issue slip",
+          "enCode": "MaterialIssueSlip"
+        },
+        {
+          "context": "logistics",
+          "meaning": "Doklad potvrzující fyzický výdej zboží ze skladu — používá se při vyskladnění pro interní potřeby nebo při převodech.",
+          "en": "Material issue slip",
+          "enCode": "MaterialIssueSlip"
+        }
+      ]
+    },
+    {
+      "slug": "order-cost-center",
+      "term": "Zakázka",
+      "translations": {
+        "cs": "Zakázka",
+        "en": "Order / Cost center",
+        "ro": "Comandă / Centru de cost",
+        "it": "Ordine / Centro di costo",
+        "ua": "Замовлення",
+        "pl": "Zlecenie"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Synonymum pro zákaznickou objednávku v logistickém zpracování — zakázka vzniká po nákupu zákazníka a prochází procesem vychystání a balení.",
+          "en": "Order",
+          "enCode": "Order"
+        },
+        {
+          "context": "finance",
+          "meaning": "Interní zakázka / středisko — nákladové místo pro sledování výdajů v rámci projektu nebo oddělení.",
+          "en": "Cost center / Internal order",
+          "enCode": "CostCenter"
+        }
+      ]
+    },
+    {
+      "slug": "invoice-matching",
+      "term": "Zplatnění",
+      "translations": {
+        "cs": "Zplatnění",
+        "en": "Invoice matching",
+        "ro": "Potrivire facturi",
+        "it": "Abbinamento fattura",
+        "ua": "Звірка рахунків",
+        "pl": "Weryfikacja faktur"
+      },
+      "definitions": [
+        {
+          "context": "logistics",
+          "meaning": "Invoice matching — proces párování přijaté faktury s příjemkou a objednávkou pro ověření správnosti a schválení platby.",
+          "en": "Invoice matching",
+          "enCode": "InvoiceMatching"
+        },
+        {
+          "context": "finance",
+          "meaning": "Schválení a likvidace faktury — ověření věcné a formální správnosti dokladu před zaúčtováním.",
+          "en": "Invoice approval",
+          "enCode": "InvoiceApproval"
+        }
+      ]
+    }
+  ]
+}

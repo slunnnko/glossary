@@ -1,16 +1,47 @@
-term_cs: Položka
-term_en: Item
-term_ro: Articol
-term_it: Articolo
-term_ua: Позиція
-term_pl: Pozycja
-
-definitions:
-  - context: finance
-    meaning: Řádek dokladu — jednotlivý záznam na faktuře nebo účetním dokladu s částkou sazbou DPH a předkontací.
-    en_gui: Item / Line item
-    en_code: DocumentItem
-  - context: logistics
-    meaning: Položka příjmu (receiving item) — konkrétní produkt přijatý na sklad v rámci dodávky.
-    en_gui: Receiving item
-    en_code: ReceivingItem
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: item--finance
+  title: Item
+  description: Řádek dokladu — jednotlivý záznam na faktuře nebo účetním dokladu s částkou sazbou DPH a předkontací.
+  annotations:
+    glossary/term-cs: Položka
+    glossary/term-en: Item
+    glossary/term-ro: Articol
+    glossary/term-it: Articolo
+    glossary/term-ua: Позиція
+    glossary/term-pl: Pozycja
+    glossary/en-gui: Item / Line item
+    glossary/en-code: DocumentItem
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: item--logistics
+  title: Item
+  description: Položka příjmu (receiving item) — konkrétní produkt přijatý na sklad v rámci dodávky.
+  annotations:
+    glossary/term-cs: Položka
+    glossary/term-en: Item
+    glossary/term-ro: Articol
+    glossary/term-it: Articolo
+    glossary/term-ua: Позиція
+    glossary/term-pl: Pozycja
+    glossary/en-gui: Receiving item
+    glossary/en-code: ReceivingItem
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

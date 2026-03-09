@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import data from "./terms.json";
 
 import { githubApi, utf8ToBase64, base64ToUtf8 } from "./lib/github";
-import { termToYAML, contextsToYAML } from "./lib/yaml";
+import { termToYAML, domainToYAML } from "./lib/yaml";
 import { slugify } from "./lib/utils";
 
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
@@ -187,35 +187,20 @@ export default function App() {
           }
         }
 
-        // Commit contexts.yml if new contexts were created
-        if (Object.keys(newContexts).length > 0) {
-          const ctxApiPath = `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/contexts.yml`;
-          try {
-            const ctxData = await githubApi(`${ctxApiPath}?ref=main`, {}, token);
-            const current = base64ToUtf8(ctxData.content);
-            const addition = contextsToYAML(newContexts);
-            const updated = current.trimEnd() + "\n\n" + addition;
-            await githubApi(ctxApiPath, {
+        // Commit a domains/{key}.yaml for each newly created domain
+        for (const [key, ctx] of Object.entries(newContexts)) {
+          await githubApi(
+            `/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/domains/${key}.yaml`,
+            {
               method: "PUT",
               body: {
-                message: `feat: add context(s) ${Object.keys(newContexts).join(", ")}`,
-                content: utf8ToBase64(updated),
-                sha: ctxData.sha,
+                message: `feat: add domain "${ctx.label}"`,
+                content: utf8ToBase64(domainToYAML(key, ctx)),
                 branch: branchName,
               },
-            }, token);
-          } catch {
-            // contexts.yml doesn't exist yet — create it with all contexts
-            const full = contextsToYAML({ ...CONTEXTS, ...newContexts });
-            await githubApi(ctxApiPath, {
-              method: "PUT",
-              body: {
-                message: `feat: create contexts.yml with context(s) ${Object.keys(newContexts).join(", ")}`,
-                content: utf8ToBase64(full),
-                branch: branchName,
-              },
-            }, token);
-          }
+            },
+            token
+          );
         }
 
         // Open PR

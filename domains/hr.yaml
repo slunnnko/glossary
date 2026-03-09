@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: hr
+  title: HR
+  annotations:
+    glossary/color: "#0891b2"
+    glossary/icon: "👥"
+spec:
+  owner: glossary-owners

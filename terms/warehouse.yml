@@ -1,26 +1,97 @@
-term_cs: Sklad
-term_en: Warehouse
-term_ro: Depozit
-term_it: Magazzino
-term_ua: Склад
-term_pl: Magazyn
-
-definitions:
-  - context: finance
-    meaning: Účetní sklad (Accounting stock) — logická evidence zásob pro účetní účely. Zachycuje hodnotu a pohyb zásob v účetních knihách.
-    en_gui: Accounting stock
-    en_code: AccountingStock
-    obsolete: Stock;StockBook;Warehouse
-  - context: finance
-    meaning: Fyzický sklad (Physical warehouse) — evidence fyzické lokace zásob bez vazby na účetní hodnotu.
-    en_gui: Physical warehouse
-    en_code: PhysicalWarehouse
-    obsolete: PhysicalStock
-  - context: logistics
-    meaning: Budova nebo část budovy určená pro logistické operace — příjem skladování vychystávání balení a expedice zboží.
-    en_gui: Warehouse / Stock
-    en_code: Warehouse
-  - context: logistics
-    meaning: Oddělení skladu — konkrétní funkční část skladu s určeným účelem (příjem expedice galerie atd.).
-    en_gui: Department
-    en_code: Department
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: warehouse--finance
+  title: Warehouse
+  description: Účetní sklad (Accounting stock) — logická evidence zásob pro účetní účely. Zachycuje hodnotu a pohyb zásob v účetních knihách.
+  annotations:
+    glossary/term-cs: Sklad
+    glossary/term-en: Warehouse
+    glossary/term-ro: Depozit
+    glossary/term-it: Magazzino
+    glossary/term-ua: Склад
+    glossary/term-pl: Magazyn
+    glossary/en-gui: Accounting stock
+    glossary/en-code: AccountingStock
+    glossary/obsolete: Stock;StockBook;Warehouse
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: warehouse--finance
+  title: Warehouse
+  description: Fyzický sklad (Physical warehouse) — evidence fyzické lokace zásob bez vazby na účetní hodnotu.
+  annotations:
+    glossary/term-cs: Sklad
+    glossary/term-en: Warehouse
+    glossary/term-ro: Depozit
+    glossary/term-it: Magazzino
+    glossary/term-ua: Склад
+    glossary/term-pl: Magazyn
+    glossary/en-gui: Physical warehouse
+    glossary/en-code: PhysicalWarehouse
+    glossary/obsolete: PhysicalStock
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: warehouse--logistics
+  title: Warehouse
+  description: Budova nebo část budovy určená pro logistické operace — příjem skladování vychystávání balení a expedice zboží.
+  annotations:
+    glossary/term-cs: Sklad
+    glossary/term-en: Warehouse
+    glossary/term-ro: Depozit
+    glossary/term-it: Magazzino
+    glossary/term-ua: Склад
+    glossary/term-pl: Magazyn
+    glossary/en-gui: Warehouse / Stock
+    glossary/en-code: Warehouse
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: warehouse--logistics
+  title: Warehouse
+  description: Oddělení skladu — konkrétní funkční část skladu s určeným účelem (příjem expedice galerie atd.).
+  annotations:
+    glossary/term-cs: Sklad
+    glossary/term-en: Warehouse
+    glossary/term-ro: Depozit
+    glossary/term-it: Magazzino
+    glossary/term-ua: Склад
+    glossary/term-pl: Magazyn
+    glossary/en-gui: Department
+    glossary/en-code: Department
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

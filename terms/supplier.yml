@@ -1,20 +1,71 @@
-term_cs: Dodavatel
-term_en: Supplier
-term_ro: Furnizor
-term_it: Fornitore
-term_ua: Постачальник
-term_pl: Dostawca
-
-definitions:
-  - context: purchasing
-    meaning: Obchodní partner od kterého firma nakupuje zboží. V nákupním procesu se řeší výběr zalistování a správa dodavatelů.
-    en_gui: Supplier / Vendor
-    en_code: Supplier
-  - context: logistics
-    meaning: Dodavatel v kontextu příjmu zboží — identifikace od koho přišla dodávka párování s objednávkou.
-    en_gui: Supplier
-    en_code: Supplier
-  - context: finance
-    meaning: Dodavatel jako účetní entita — subjekt vůči kterému existují závazky (faktury k úhradě).
-    en_gui: Vendor
-    en_code: Vendor
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: supplier--purchasing
+  title: Supplier
+  description: Obchodní partner od kterého firma nakupuje zboží. V nákupním procesu se řeší výběr zalistování a správa dodavatelů.
+  annotations:
+    glossary/term-cs: Dodavatel
+    glossary/term-en: Supplier
+    glossary/term-ro: Furnizor
+    glossary/term-it: Fornitore
+    glossary/term-ua: Постачальник
+    glossary/term-pl: Dostawca
+    glossary/en-gui: Supplier / Vendor
+    glossary/en-code: Supplier
+    glossary/domain: "purchasing"
+  tags:
+    - vocabulary
+    - purchasing
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: purchasing
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: supplier--logistics
+  title: Supplier
+  description: Dodavatel v kontextu příjmu zboží — identifikace od koho přišla dodávka párování s objednávkou.
+  annotations:
+    glossary/term-cs: Dodavatel
+    glossary/term-en: Supplier
+    glossary/term-ro: Furnizor
+    glossary/term-it: Fornitore
+    glossary/term-ua: Постачальник
+    glossary/term-pl: Dostawca
+    glossary/en-gui: Supplier
+    glossary/en-code: Supplier
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: supplier--finance
+  title: Supplier
+  description: Dodavatel jako účetní entita — subjekt vůči kterému existují závazky (faktury k úhradě).
+  annotations:
+    glossary/term-cs: Dodavatel
+    glossary/term-en: Supplier
+    glossary/term-ro: Furnizor
+    glossary/term-it: Fornitore
+    glossary/term-ua: Постачальник
+    glossary/term-pl: Dostawca
+    glossary/en-gui: Vendor
+    glossary/en-code: Vendor
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance

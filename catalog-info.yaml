@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: glossary
+  description: Domain vocabulary glossary
+spec:
+  targets:
+    - ./domains/*.yaml
+    - ./terms/*.yml

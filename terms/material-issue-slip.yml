@@ -1,16 +1,47 @@
-term_cs: Výdejka
-term_en: Material issue slip
-term_ro: Bon de ieșire
-term_it: Bolla di uscita
-term_ua: Видатковий документ
-term_pl: Wydanie
-
-definitions:
-  - context: finance
-    meaning: Účetní doklad o výdeji materiálu nebo zboží ze skladu slouží jako podklad pro zaúčtování úbytku zásob.
-    en_gui: Material issue slip
-    en_code: MaterialIssueSlip
-  - context: logistics
-    meaning: Doklad potvrzující fyzický výdej zboží ze skladu — používá se při vyskladnění pro interní potřeby nebo při převodech.
-    en_gui: Material issue slip
-    en_code: MaterialIssueSlip
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: material-issue-slip--finance
+  title: Material issue slip
+  description: Účetní doklad o výdeji materiálu nebo zboží ze skladu slouží jako podklad pro zaúčtování úbytku zásob.
+  annotations:
+    glossary/term-cs: Výdejka
+    glossary/term-en: Material issue slip
+    glossary/term-ro: Bon de ieșire
+    glossary/term-it: Bolla di uscita
+    glossary/term-ua: Видатковий документ
+    glossary/term-pl: Wydanie
+    glossary/en-gui: Material issue slip
+    glossary/en-code: MaterialIssueSlip
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: material-issue-slip--logistics
+  title: Material issue slip
+  description: Doklad potvrzující fyzický výdej zboží ze skladu — používá se při vyskladnění pro interní potřeby nebo při převodech.
+  annotations:
+    glossary/term-cs: Výdejka
+    glossary/term-en: Material issue slip
+    glossary/term-ro: Bon de ieșire
+    glossary/term-it: Bolla di uscita
+    glossary/term-ua: Видатковий документ
+    glossary/term-pl: Wydanie
+    glossary/en-gui: Material issue slip
+    glossary/en-code: MaterialIssueSlip
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics

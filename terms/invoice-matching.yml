@@ -1,16 +1,47 @@
-term_cs: Zplatnění
-term_en: Invoice matching
-term_ro: Potrivire facturi
-term_it: Abbinamento fattura
-term_ua: Звірка рахунків
-term_pl: Weryfikacja faktur
-
-definitions:
-  - context: logistics
-    meaning: Invoice matching — proces párování přijaté faktury s příjemkou a objednávkou pro ověření správnosti a schválení platby.
-    en_gui: Invoice matching
-    en_code: InvoiceMatching
-  - context: finance
-    meaning: Schválení a likvidace faktury — ověření věcné a formální správnosti dokladu před zaúčtováním.
-    en_gui: Invoice approval
-    en_code: InvoiceApproval
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: invoice-matching--logistics
+  title: Invoice matching
+  description: Invoice matching — proces párování přijaté faktury s příjemkou a objednávkou pro ověření správnosti a schválení platby.
+  annotations:
+    glossary/term-cs: Zplatnění
+    glossary/term-en: Invoice matching
+    glossary/term-ro: Potrivire facturi
+    glossary/term-it: Abbinamento fattura
+    glossary/term-ua: Звірка рахунків
+    glossary/term-pl: Weryfikacja faktur
+    glossary/en-gui: Invoice matching
+    glossary/en-code: InvoiceMatching
+    glossary/domain: "logistics"
+  tags:
+    - vocabulary
+    - logistics
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: logistics
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: invoice-matching--finance
+  title: Invoice matching
+  description: Schválení a likvidace faktury — ověření věcné a formální správnosti dokladu před zaúčtováním.
+  annotations:
+    glossary/term-cs: Zplatnění
+    glossary/term-en: Invoice matching
+    glossary/term-ro: Potrivire facturi
+    glossary/term-it: Abbinamento fattura
+    glossary/term-ua: Звірка рахунків
+    glossary/term-pl: Weryfikacja faktur
+    glossary/en-gui: Invoice approval
+    glossary/en-code: InvoiceApproval
+    glossary/domain: "finance"
+  tags:
+    - vocabulary
+    - finance
+spec:
+  type: vocabulary-term
+  owner: glossary-owners
+  domain: finance
